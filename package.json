@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:dw": "cross-env NEXT_PUBLIC_BASE_PATH=/nobra_web_02 next build",
     "start": "next start"
   },
   "dependencies": {
@@ -13,6 +14,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "cross-env": "^7",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
