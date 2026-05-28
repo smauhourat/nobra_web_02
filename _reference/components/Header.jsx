@@ -62,7 +62,7 @@ function Header({ route, onNav }) {
         ))}
         <div className="nb-mobile-meta">
           <span>estudio@nobra.ar</span>
-          <span>La Plata, Buenos Aires</span>
+          <span>CABA, Buenos Aires</span>
         </div>
       </div>
     </React.Fragment>

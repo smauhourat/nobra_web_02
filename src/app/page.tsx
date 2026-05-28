@@ -37,7 +37,7 @@ export default function HomePage() {
         <div className="nb-hero-content">
           <div className="nb-eyebrow">
             <span className="nb-rule" />
-            Estudio de arquitectura · La Plata · Bs. As.
+            Estudio de arquitectura · CABA · Bs. As.
           </div>
           <h1 className="nb-display">
             Pensamos, proyectamos<br />
@@ -61,7 +61,7 @@ export default function HomePage() {
         <aside className="nb-hero-meta">
           <div className="nb-meta-row"><span className="nb-meta-k">Año</span><span className="nb-meta-v">2026 —</span></div>
           <div className="nb-meta-row"><span className="nb-meta-k">Estudio</span><span className="nb-meta-v">Novoa &amp; Bravin</span></div>
-          <div className="nb-meta-row"><span className="nb-meta-k">Sede</span><span className="nb-meta-v">La Plata, BA</span></div>
+          <div className="nb-meta-row"><span className="nb-meta-k">Sede</span><span className="nb-meta-v">CABA, BA</span></div>
           <div className="nb-meta-row"><span className="nb-meta-k">Servicio</span><span className="nb-meta-v">Proyecto + Obra</span></div>
         </aside>
 

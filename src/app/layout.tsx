@@ -6,7 +6,7 @@ import LeadMagnetBanner from '@/components/LeadMagnetBanner'
 
 export const metadata: Metadata = {
   title: 'Nobra · Novoa & Bravin Arquitectos',
-  description: 'Estudio de arquitectura en La Plata, Buenos Aires. Proyecto, dirección de obra y construcción llave en mano.',
+  description: 'Estudio de arquitectura en CABA, Buenos Aires. Proyecto, dirección de obra y construcción llave en mano.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

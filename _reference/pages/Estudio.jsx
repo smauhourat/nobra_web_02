@@ -19,7 +19,7 @@ const FOUNDERS = [
     full: 'Mat. arq. Bravin',
     role: 'Socia · Diseño e interiorismo',
     bio:
-      'Seis años en estudios de interiorismo y comercial de Buenos Aires y La Plata. ' +
+      'Seis años en estudios de interiorismo y comercial de Buenos Aires y CABA. ' +
       'Trabajó en proyectos de retail, gastronomía y vivienda de gama media-alta.',
     meta: [
       ['Matrícula', 'CAPBA · D-V'],
@@ -68,7 +68,7 @@ function Estudio({ onNav }) {
           </div>
           <div className="nb-page-hero-meta-row">
             <span className="nb-page-hero-meta-k">Sede</span>
-            <span className="nb-page-hero-meta-v">La Plata, Buenos Aires</span>
+            <span className="nb-page-hero-meta-v">CABA, Buenos Aires</span>
           </div>
           <div className="nb-page-hero-meta-row">
             <span className="nb-page-hero-meta-k">Matrícula</span>

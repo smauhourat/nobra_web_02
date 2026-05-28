@@ -195,7 +195,7 @@ function Servicios({ onNav }) {
           </div>
           <div className="nb-page-hero-meta-row">
             <span className="nb-page-hero-meta-k">Cobertura</span>
-            <span className="nb-page-hero-meta-v">La Plata + Gran BA</span>
+            <span className="nb-page-hero-meta-v">CABA + Gran BA</span>
           </div>
         </div>
       </section>

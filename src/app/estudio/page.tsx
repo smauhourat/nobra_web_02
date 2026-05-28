@@ -10,7 +10,7 @@ const FOUNDERS = [
   },
   {
     n: 'Bravin', full: 'Mat. arq. Bravin', role: 'Socia · Diseño e interiorismo',
-    bio: 'Seis años en estudios de interiorismo y comercial de Buenos Aires y La Plata. Trabajó en proyectos de retail, gastronomía y vivienda de gama media-alta.',
+    bio: 'Seis años en estudios de interiorismo y comercial de Buenos Aires y CABA. Trabajó en proyectos de retail, gastronomía y vivienda de gama media-alta.',
     meta: [['Matrícula', 'CAPBA · D-V'], ['Especialidad', 'Interiorismo · Retail'], ['Software', 'SketchUp · Twinmotion']] as [string, string][],
     v: 2,
   },
@@ -47,7 +47,7 @@ export default function EstudioPage() {
         <div className="nb-page-hero-meta">
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Socios</span><span className="nb-page-hero-meta-v">02 · Novoa &amp; Bravin</span></div>
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Fundación</span><span className="nb-page-hero-meta-v">2026</span></div>
-          <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Sede</span><span className="nb-page-hero-meta-v">La Plata, Buenos Aires</span></div>
+          <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Sede</span><span className="nb-page-hero-meta-v">CABA, Buenos Aires</span></div>
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Matrícula</span><span className="nb-page-hero-meta-v">CAPBA · D-V</span></div>
         </div>
       </section>

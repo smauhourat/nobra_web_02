@@ -8,7 +8,7 @@ function Hero({ tweaks, onNav }) {
       <div className="nb-hero-content">
         <div className="nb-eyebrow nb-eyebrow-num">
           <span className="nb-rule"></span>
-          Estudio de arquitectura · La Plata · Bs. As.
+          Estudio de arquitectura · CABA · Bs. As.
         </div>
 
         <h1 className="nb-display">
@@ -46,7 +46,7 @@ function Hero({ tweaks, onNav }) {
           </div>
           <div className="nb-meta-row">
             <span className="nb-meta-k">Sede</span>
-            <span className="nb-meta-v">La Plata, BA</span>
+            <span className="nb-meta-v">CABA, BA</span>
           </div>
           <div className="nb-meta-row">
             <span className="nb-meta-k">Servicio</span>

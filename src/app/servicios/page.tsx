@@ -48,7 +48,7 @@ export default function ServiciosPage() {
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Servicios</span><span className="nb-page-hero-meta-v">08 · ofertados</span></div>
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Modalidad</span><span className="nb-page-hero-meta-v">Llave en mano · etapa única</span></div>
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Honorarios</span><span className="nb-page-hero-meta-v">Por presupuesto · CAPBA</span></div>
-          <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Cobertura</span><span className="nb-page-hero-meta-v">La Plata + Gran BA</span></div>
+          <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Cobertura</span><span className="nb-page-hero-meta-v">CABA + Gran BA</span></div>
         </div>
       </section>
 
