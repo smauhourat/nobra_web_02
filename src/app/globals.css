@@ -227,7 +227,7 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
   border-bottom-color: var(--line);
 }
 .nb-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-.nb-brand-mark { width: 32px; height: 32px; }
+.nb-brand-mark { width: 52px; height: 52px; }
 .nb-brand-text {
   font-family: var(--font-display); font-weight: 200; font-size: 20px;
   letter-spacing: 0.32em; color: var(--nobra-blue); text-transform: uppercase;

@@ -31,7 +31,7 @@ main { display: block; }
 .nb-brand {
   display: flex; align-items: center; gap: 14px; text-decoration: none;
 }
-.nb-brand-mark { width: 36px; height: 36px; }
+. { width: 56px; height: 56px; }
 .nb-brand-text {
   font-family: var(--font-display); font-weight: 200; font-size: 20px;
   letter-spacing: 0.32em; color: var(--nobra-blue); text-transform: uppercase;

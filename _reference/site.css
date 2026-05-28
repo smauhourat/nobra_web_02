@@ -23,7 +23,7 @@ body { background: var(--bg-1); }
 }
 .nb-nav-link.is-active { color: var(--nobra-blue-deep); }
 
-.nb-brand-mark { width: 32px; height: 32px; }
+.nb-brand-mark { width: 52px; height: 52px; }
 
 /* mobile menu */
 .nb-burger {

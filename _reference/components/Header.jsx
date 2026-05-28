@@ -29,8 +29,8 @@ function Header({ route, onNav }) {
     <React.Fragment>
       <header className={`nb-header ${scrolled ? 'is-scrolled' : ''}`} data-screen-label="Header">
         <a className="nb-brand" href="#" onClick={handle('home')} aria-label="Inicio">
-          <img className="nb-brand-mark" src="ds/logo-marca-color.svg" alt="" />
-          <span className="nb-brand-text">Nobra</span>
+          <img className="nb-brand-mark" src="ds/logo-marca-color-2.svg" alt="" />
+          <span className="nb-brand-text">NobraA</span>
         </a>
 
         <nav className="nb-nav">
