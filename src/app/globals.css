@@ -821,6 +821,7 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
   .nb-process-timeline { grid-template-columns: 1fr; }
   .nb-toolkit-grid { grid-template-columns: 1fr; }
   .nb-trust-grid { grid-template-columns: 1fr; }
+  .nb-trust-cell { text-align: center; align-items: center; }
   .nb-founder { grid-template-columns: 1fr; }
   .nb-founder-portrait { max-width: 200px; }
   .nb-leadmag-banner { left: 16px; right: 16px; bottom: 16px; max-width: none; }
