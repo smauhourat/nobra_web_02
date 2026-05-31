@@ -25,7 +25,7 @@ function Hero({ tweaks, onNav }) {
         <div className="nb-hero-actions">
           <button className="nb-btn nb-btn-primary"
                   onClick={() => onNav('contacto')}>
-            Cuéntanos tu idea
+            Contanos tu idea
           </button>
           <button className="nb-btn nb-btn-text"
                   onClick={() => onNav('servicios')}>

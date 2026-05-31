@@ -129,13 +129,16 @@ export default function ContactoPage() {
                 <span className="nb-rule inv" />
                 ¿Todavía no decidiste?
               </div>
+
+            </div>
+            <div style={{ marginTop: 10, paddingTop: 10 }}>
               <a
                 href="#checklist"
                 style={{ color: 'var(--bone)', textDecoration: 'underline', textUnderlineOffset: 4, fontSize: 14 }}
                 onClick={e => { e.preventDefault(); document.getElementById('checklist')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}
               >
                 Descargá nuestra guía: Checklist de 10 puntos antes de construir →
-              </a>
+              </a>              
             </div>
           </div>
 

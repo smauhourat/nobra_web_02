@@ -50,7 +50,7 @@ export default function HomePage() {
           </p>
           <div className="nb-hero-actions">
             <Link className="nb-btn nb-btn-primary" href="/contacto">
-              Cuéntanos tu idea
+              Contanos tu idea
             </Link>
             <Link className="nb-btn nb-btn-text" href="/servicios">
               Ver servicios <span className="nb-arrow">→</span>

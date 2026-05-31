@@ -29,7 +29,7 @@ export default function Header() {
       <header className={`nb-header${scrolled ? ' is-scrolled' : ''}`}>
         <Link className="nb-brand" href="/" aria-label="Inicio">
           <img className="nb-brand-mark" src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/logo-marca-color-2.svg`} alt="" />
-          <span className="nb-brand-text">NobraA</span>
+          {/* <span className="nb-brand-text">NobraA</span> */}
         </Link>
 
         <nav className="nb-nav">
