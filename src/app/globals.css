@@ -793,6 +793,7 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
   .nb-pillars-head, .nb-toolkit-head, .nb-manifesto { grid-template-columns: 1fr; }
   .nb-trust-grid { grid-template-columns: repeat(2, 1fr); }
   .nb-llave-inner, .nb-leadmag, .nb-estudio-intro, .nb-contacto-page-grid, .nb-page-hero { grid-template-columns: 1fr; }
+  .nb-estudio-intro-side { position: static; }
   .nb-page-hero { gap: 32px; }
   .nb-project-card { grid-template-columns: 1fr; gap: 32px; }
   .nb-project-card:nth-child(even) { direction: ltr; }
@@ -824,5 +825,6 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
   .nb-founder-portrait { max-width: 200px; }
   .nb-leadmag-banner { left: 16px; right: 16px; bottom: 16px; max-width: none; }
   .nb-hero-wordmark { font-size: 28vw; bottom: -4vw; }
-  .nb-brand-mark-text { display: none;}
+  .nb-brand-mark-text { display: none;}  
+  .nb-estudio-intro-side { position: static; }
 }

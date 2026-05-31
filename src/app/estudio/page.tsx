@@ -57,7 +57,7 @@ export default function EstudioPage() {
         <div className="nb-estudio-intro-side">
           <span className="nb-eyebrow">
             <span className="nb-rule" />
-            02 · Historia
+            02 · Historiaaaa
           </span>
           <h2 className="nb-h2" style={{ marginTop: 20 }}>Por qué Nobra.</h2>
         </div>
