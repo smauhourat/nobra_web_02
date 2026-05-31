@@ -1,0 +1,1061 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nobra · Informe de diseño</title>
+  <link rel="stylesheet" href="colors_and_type.css">
+  <style>
+    /* ============================================================
+       Informe de diseño — documento de lectura larga
+       Aplica el sistema Nobra: hueso, azul, Montserrat, líneas 1px.
+       ============================================================ */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bone);
+      color: var(--stone-700, var(--ink));
+      font-family: var(--font-sans);
+      font-weight: var(--w-regular);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .doc {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: clamp(56px, 9vw, 120px) clamp(20px, 5vw, 64px) clamp(80px, 10vw, 140px);
+    }
+
+    .text-strong {
+        font-weight: 700;
+    }
+
+    /* ---- Cover ------------------------------------------------ */
+    .cover {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: clamp(48px, 6vw, 72px);
+      margin-bottom: clamp(56px, 8vw, 96px);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .cover-mark {
+      display: flex; align-items: center; gap: 14px;
+      color: var(--nobra-blue);
+    }
+    .cover-mark img { height: 28px; width: auto; display: block; }
+    .cover-mark span {
+      font-family: var(--font-display);
+      font-weight: var(--w-regular);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .cover-eyebrow {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-family: var(--font-sans);
+      font-weight: var(--w-medium);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-500);
+    }
+    .cover-eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--nobra-blue);
+    }
+
+    .cover-title {
+      font-family: var(--font-display);
+      font-weight: var(--w-thin);
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      color: var(--nobra-blue);
+      margin: 0;
+      text-wrap: balance;
+    }
+    .cover-title em { font-style: italic; font-weight: var(--w-light); }
+
+    .cover-meta {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+    .cover-meta-cell {
+      padding: 16px 16px 16px 0;
+      border-bottom: 1px solid var(--line);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .cover-meta-k {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-300);
+      font-weight: var(--w-medium);
+    }
+    .cover-meta-v {
+      font-size: 13px;
+      color: var(--nobra-blue);
+      font-weight: var(--w-medium);
+    }
+
+    /* ---- Sections --------------------------------------------- */
+    .section {
+      margin-bottom: clamp(64px, 8vw, 96px);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      align-items: baseline;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--nobra-blue);
+    }
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--stone-300);
+      letter-spacing: 0.18em;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: var(--w-light);
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--nobra-blue);
+      margin: 0;
+    }
+    .section-title em { font-style: italic; }
+
+    .section-body { padding-left: 0; }
+    @media (min-width: 720px) {
+      .section-body { padding-left: 104px; }
+    }
+
+    .lede {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--stone-700, #2a2620);
+      margin: 0 0 24px;
+      max-width: 60ch;
+    }
+    .lede strong { color: var(--nobra-blue); font-weight: var(--w-medium); }
+
+    p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--stone-700, #2a2620);
+      margin: 0 0 16px;
+      max-width: 64ch;
+    }
+    p strong { color: var(--nobra-blue); font-weight: var(--w-medium); }
+    p em { color: var(--nobra-blue); }
+
+    /* sub-heading inside a section */
+    h3.sub {
+      font-family: var(--font-display);
+      font-weight: var(--w-regular);
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--nobra-blue);
+      margin: 32px 0 12px;
+    }
+    h3.sub::before {
+      content: attr(data-num);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--stone-300);
+      margin-right: 14px;
+      vertical-align: 4px;
+    }
+
+    /* lists */
+    ul.clean { list-style: none; padding: 0; margin: 0 0 16px; }
+    ul.clean li {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--stone-700, #2a2620);
+      padding: 10px 0 10px 26px;
+      border-top: 1px solid var(--line);
+      position: relative;
+    }
+    ul.clean li:last-child { border-bottom: 1px solid var(--line); }
+    ul.clean li::before {
+      content: '—';
+      color: var(--nobra-blue);
+      font-weight: var(--w-medium);
+      position: absolute;
+      left: 0;
+      top: 10px;
+    }
+    ul.clean li strong { color: var(--nobra-blue); font-weight: var(--w-medium); }
+
+    /* key-value table */
+    .kv {
+      margin: 24px 0;
+      border-top: 1px solid var(--line);
+    }
+    .kv-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 32px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .kv-k {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-300);
+      font-weight: var(--w-medium);
+    }
+    .kv-v { color: var(--stone-700, #2a2620); }
+    .kv-v strong { color: var(--nobra-blue); font-weight: var(--w-medium); }
+    .kv-v code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--nobra-blue);
+      background: var(--bone-2);
+      padding: 1px 6px;
+    }
+
+    /* quote */
+    blockquote.q {
+      margin: 32px 0;
+      padding: 24px 0 24px 28px;
+      border-left: 2px solid var(--nobra-blue);
+      font-family: var(--font-display);
+      font-weight: var(--w-light);
+      font-style: italic;
+      font-size: clamp(20px, 2.2vw, 28px);
+      line-height: 1.35;
+      color: var(--nobra-blue);
+      max-width: 36ch;
+      letter-spacing: -0.005em;
+    }
+
+    /* swatches */
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin: 24px 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .swatch {
+      padding: 20px 16px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex; flex-direction: column; gap: 8px;
+      min-height: 140px;
+    }
+    .swatch-chip {
+      width: 36px; height: 36px;
+      border: 1px solid var(--line);
+    }
+    .swatch-name {
+      font-family: var(--font-sans);
+      font-weight: var(--w-medium);
+      font-size: 12px;
+      color: var(--nobra-blue);
+      margin-top: auto;
+    }
+    .swatch-code {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--stone-300);
+      letter-spacing: 0.05em;
+    }
+    .swatch-use {
+      font-size: 10px;
+      color: var(--stone-500);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: var(--w-medium);
+      margin-top: 2px;
+    }
+
+    /* references — inverted strip */
+    .refs {
+      background: var(--nobra-blue);
+      color: var(--bone);
+      padding: clamp(48px, 6vw, 80px) clamp(20px, 5vw, 64px);
+      margin: clamp(64px, 8vw, 96px) calc(50% - 50vw) clamp(40px, 5vw, 64px);
+      width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      max-width: 100vw;
+    }
+    .refs-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 64px);
+    }
+    .refs-eyebrow {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bone);
+      font-weight: var(--w-medium);
+      margin-bottom: 20px;
+    }
+    .refs-eyebrow::before {
+      content: ''; width: 32px; height: 1px; background: var(--bone);
+    }
+    .refs-title {
+      font-family: var(--font-display);
+      font-weight: var(--w-thin);
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      color: var(--bone);
+      margin: 0 0 32px;
+      letter-spacing: -0.02em;
+      max-width: 22ch;
+    }
+    .refs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid rgba(246,244,239,0.25);
+    }
+    .ref-row {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 60px 1fr 1.5fr;
+      gap: 28px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(246,244,239,0.18);
+      font-size: 13px;
+      line-height: 1.55;
+      color: rgba(246,244,239,0.75);
+    }
+    .ref-row-n {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: rgba(246,244,239,0.55);
+    }
+    .ref-row-name {
+      color: var(--bone);
+      font-weight: var(--w-medium);
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    /* pull cards (decisions) */
+    .decisions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: 24px 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .decision {
+      padding: 24px 22px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex; flex-direction: column; gap: 10px;
+      min-height: 200px;
+    }
+    .decision-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--stone-300);
+      letter-spacing: 0.18em;
+    }
+    .decision-t {
+      font-family: var(--font-display);
+      font-weight: var(--w-light);
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--nobra-blue);
+      margin: 0;
+    }
+    .decision-d {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--stone-500);
+      margin: 0;
+    }
+    .decision-why {
+      font-size: 11px;
+      color: var(--stone-500);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: var(--w-medium);
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .decision-why::before { content: 'Por qué · '; color: var(--nobra-blue); }
+
+    /* footer */
+    .doc-foot {
+      margin-top: clamp(80px, 10vw, 140px);
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone-300);
+      font-weight: var(--w-medium);
+    }
+    .doc-foot a { color: var(--nobra-blue); text-decoration: none; }
+
+    /* TOC */
+    .toc {
+      margin: 32px 0 56px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .toc-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-300);
+      font-weight: var(--w-medium);
+      margin-bottom: 16px;
+    }
+    .toc ol {
+      list-style: none; padding: 0; margin: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 32px;
+    }
+    .toc li {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 12px;
+      padding: 6px 0;
+      align-items: baseline;
+      font-size: 13px;
+    }
+    .toc li a {
+      color: var(--nobra-blue);
+      text-decoration: none;
+      font-weight: var(--w-medium);
+    }
+    .toc li a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .toc-n {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--stone-300);
+    }
+    .toc-page {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--stone-300);
+    }
+
+    /* responsive */
+    @media (max-width: 720px) {
+      .cover-meta { grid-template-columns: 1fr 1fr; }
+      .toc ol { grid-template-columns: 1fr; }
+      .section-head { grid-template-columns: 60px 1fr; gap: 16px; }
+      .section-body { padding-left: 0; }
+      .swatches { grid-template-columns: 1fr 1fr; }
+      .decisions { grid-template-columns: 1fr; }
+      .kv-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
+      .refs-grid { grid-template-columns: 1fr; }
+      .ref-row { grid-template-columns: 40px 1fr; }
+      .ref-row > :last-child { grid-column: 1 / -1; padding-left: 56px; }
+    }
+
+    /* print */
+    @media print {
+      body { background: white; }
+      .refs { background: white; color: var(--ink); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .refs-title, .refs-eyebrow, .ref-row-name { color: var(--nobra-blue); }
+      .ref-row { color: var(--stone-700); border-color: var(--line); }
+      .section { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<article class="doc" data-screen-label="Informe de diseño">
+
+  <!-- ============================== COVER ============================== -->
+  <header class="cover">
+    <div class="cover-mark">
+      <img src="logo-marca-color.svg" alt="">
+      <span>Nobra · Novoa &amp; Bravin Arquitectos</span>
+    </div>
+
+    <div>
+      <div class="cover-eyebrow">Informe de diseño · v01</div>
+      <h1 class="cover-title">
+        Por qué el sitio<br>
+        se ve <em>así</em>.
+      </h1>
+      <p class="lede" style="margin-top: 24px;">
+        Documento de justificación del sitio web del estudio. Describe las decisiones
+        de fondo —tono, paleta, tipografía, arquitectura de información— y las razones
+        por las que se tomaron. 
+      </p>
+    </div>
+
+    <div class="cover-meta">
+      <div class="cover-meta-cell">
+        <span class="cover-meta-k">Cliente</span>
+        <span class="cover-meta-v">Nobra · Estudio de arquitectura</span>
+      </div>
+      <div class="cover-meta-cell">
+        <span class="cover-meta-k">Entregable</span>
+        <span class="cover-meta-v">Sitio web · 5 páginas</span>
+      </div>
+      <div class="cover-meta-cell">
+        <span class="cover-meta-k">Versión</span>
+        <span class="cover-meta-v">v01 · prototipo</span>
+      </div>
+      <div class="cover-meta-cell">
+        <span class="cover-meta-k">Fecha</span>
+        <span class="cover-meta-v">Mayo 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================== TOC ============================== -->
+  <nav class="toc" aria-label="Índice">
+    <div class="toc-eyebrow">Índice del documento</div>
+    <ol>
+      <li><span class="toc-n">01</span><a href="#brief">Lectura del brief</a><span class="toc-page">§01</span></li>
+      <li><span class="toc-n">02</span><a href="#estrategia">Estrategia central</a><span class="toc-page">§02</span></li>
+      <li><span class="toc-n">03</span><a href="#tono">Tono y voz</a><span class="toc-page">§03</span></li>
+      <li><span class="toc-n">04</span><a href="#visual">Decisiones visuales</a><span class="toc-page">§04</span></li>
+      <li><span class="toc-n">05</span><a href="#paginas">Página por página</a><span class="toc-page">§05</span></li>
+      <li><span class="toc-n">06</span><a href="#imagenes">Cómo resolvemos la falta de obras</a><span class="toc-page">§06</span></li>
+      <li><span class="toc-n">07</span><a href="#lead">Captura de leads</a><span class="toc-page">§07</span></li>
+      <li><span class="toc-n">08</span><a href="#tecnico">Decisiones técnicas</a><span class="toc-page">§08</span></li>
+      <li><span class="toc-n">09</span><a href="#pendientes">Pendientes con el cliente</a><span class="toc-page">§09</span></li>
+      <li><span class="toc-n">10</span><a href="#refs">Referencias y trazabilidad</a><span class="toc-page">§10</span></li>
+    </ol>
+  </nav>
+
+  <!-- ============================== 01 ============================== -->
+  <section class="section" id="brief">
+    <header class="section-head">
+      <span class="section-num">§01</span>
+      <h2 class="section-title">Lectura del brief.</h2>
+    </header>
+    <div class="section-body">
+      <p class="lede">
+        El brief planteaba un desafío específico: un estudio sin portfolio construido
+        que necesita <strong>generar confianza instantánea</strong> y convertir visitantes
+        en leads. Toda decisión de diseño en este sitio responde a esa tensión.
+      </p>
+
+      <p>
+        Identificamos tres problemas reales que el diseño tenía que resolver, en este orden:
+      </p>
+
+      <ul class="clean">
+        <li>
+          <strong>Confianza.</strong>
+          El cliente no tiene obras terminadas que mostrar. La página tiene que comunicar
+          solvencia con otros recursos: tono profesional, sistema visual disciplinado, claridad
+          en procesos y precios.
+        </li>
+        <li>
+          <strong>Conversión.</strong>
+          Sin portfolio, el lead no llega por admirar una obra. Llega porque el sitio le
+          resuelve una duda, le baja la fricción para escribir, o le ofrece algo de valor
+          gratuito (la guía).
+        </li>
+        <li>
+          <strong>Diferenciación.</strong>
+          En Buenos Aires hay docenas de estudios. La oferta integral —proyecto, dirección
+          y ejecución bajo una sola firma— es lo único que objetivamente diferencia a Nobra.
+          El sitio tiene que hacer girar la narrativa alrededor de eso.
+        </li>
+      </ul>
+
+      <blockquote class="q">
+        El sitio no vende belleza. Vende criterio profesional.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============================== 02 ============================== -->
+  <section class="section" id="estrategia">
+    <header class="section-head">
+      <span class="section-num">§02</span>
+      <h2 class="section-title">Estrategia central.</h2>
+    </header>
+    <div class="section-body">
+      <p class="lede">
+        Si un visitante se va con <em>una sola idea</em>, esa idea tiene que ser:
+        <strong>"Nobra firma de la idea a las llaves."</strong> Todo el resto es soporte.
+      </p>
+
+      <h3 class="sub" data-num="2.1">Cuatro apuestas estratégicas</h3>
+
+      <div class="decisions">
+        <div class="decision">
+          <span class="decision-num">A — Llave en mano</span>
+          <h4 class="decision-t">Hacerlo el héroe del sitio.</h4>
+          <p class="decision-d">
+            La página de <em>Servicios</em> abre con un bloque azul completo, dedicado al servicio
+            integral —proyecto + dirección + ejecución—. Es el único bloque del sitio en
+            color de marca pleno, y aparece <em>antes</em> que la lista de los 8 servicios.
+          </p>
+          <span class="decision-why">Es el único diferenciador objetivo.</span>
+        </div>
+        <div class="decision">
+          <span class="decision-num">B — Convertir juventud en virtud</span>
+          <h4 class="decision-t">Decirlo, no esconderlo.</h4>
+          <p class="decision-d">
+            La página <em>El Estudio</em> admite explícitamente "Somos un estudio joven" y lo
+            transforma en argumento de venta: trato directo, dedicación exclusiva,
+            honorarios claros. No ocultamos el dato; le damos vuelta.
+          </p>
+          <span class="decision-why">Esconderlo se nota más que admitirlo.</span>
+        </div>
+        <div class="decision">
+          <span class="decision-num">C — Solvencia técnica visible</span>
+          <h4 class="decision-t">BIM y toolkit en El Estudio.</h4>
+          <p class="decision-d">
+            Una sección entera dedicada al software que usamos —Revit, ArchiCAD, AutoCAD,
+            Twinmotion, Enscape, Rhino, SketchUp—. Esto convence al lector técnicamente
+            informado de que estamos en el estándar profesional actual.
+          </p>
+          <span class="decision-why">Compensa la falta de obra ejecutada.</span>
+        </div>
+        <div class="decision">
+          <span class="decision-num">D — Conversión con lead magnet</span>
+          <h4 class="decision-t">Checklist gratuita en cambio de email.</h4>
+          <p class="decision-d">
+            "10 puntos antes de construir" es valor real para alguien que todavía no
+            está listo para reunirse. Capturamos el email, abrimos una conversación y
+            nutrimos el lead. Está en Contacto y como banner flotante en todo el sitio.
+          </p>
+          <span class="decision-why">Convierte visitantes fríos en leads tibios.</span>
+        </div>
+      </div>
+
+      <h3 class="sub" data-num="2.2">Lo que decidimos <em>no</em> hacer</h3>
+
+      <ul class="clean">
+        <li><strong>No inventar obras.</strong> Renders sí —son proyectos en curso reales— pero no obras terminadas falsas. Mostrar lo que hay, no lo que no hay.</li>
+        <li><strong>No usar fotografía de stock genérica.</strong> El sitio prefiere placeholders explícitos (etiquetados como tales) antes que imágenes ajenas. Más honesto y más coherente con el lenguaje arquitectónico.</li>
+        <li><strong>No usar testimonios falsos.</strong> En vez, métricas verificables: 12 años de experiencia sumada, 48 hs de respuesta, 2 arquitectos directos.</li>
+        <li><strong>No prometer plazos ni precios genéricos.</strong> Hablamos de cómo trabajamos, no de cifras que no podemos garantizar.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================== 03 ============================== -->
+  <section class="section" id="tono">
+    <header class="section-head">
+      <span class="section-num">§03</span>
+      <h2 class="section-title">Tono y voz.</h2>
+    </header>
+    <div class="section-body">
+      <p class="lede">
+        El design system define una voz <strong>profesional, sobria, cercana</strong> —nunca
+        corporativa ni inflada—. La copia se lee como si la firmara un arquitecto hablando
+        con un colega.
+      </p>
+
+      <h3 class="sub" data-num="3.1">Reglas que aplicamos</h3>
+
+      <div class="kv">
+        <div class="kv-row">
+          <span class="kv-k">Idioma</span>
+          <span class="kv-v">Español de Argentina. <code>vos</code> informal en piezas conversacionales (CTA, formulario, copy de servicios).</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Voz del estudio</span>
+          <span class="kv-v">Primera persona del plural — "Trabajamos", "Pensamos", "Acompañamos". El estudio habla como equipo.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Cliente</span>
+          <span class="kv-v">Segunda persona singular — "tu obra", "tu terreno", "tu idea". Tutea. Crea cercanía.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">CTAs</span>
+          <span class="kv-v">"Agenda una asesoría", "Contanos tu idea", "Empecemos tu proyecto". Nunca "Contacto" frío ni "Enviar".</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Frases</span>
+          <span class="kv-v">Cortas, declarativas. Punto. Aire entre ideas. Listas de servicios como sustantivos ("Dirección de obra"), no como verbos.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Itálica</span>
+          <span class="kv-v">Solo en titulares para énfasis emocional (<em>habitás</em>, <em>idea</em>, <em>forma</em>) y en citas. Nunca en cuerpo de texto.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Sin jerga publicitaria</span>
+          <span class="kv-v">Evitar "soluciones llave en mano" (decir "llave en mano" pero no "soluciones"), "experiencias únicas", "partner estratégico".</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Sin emoji</span>
+          <span class="kv-v">Cero. Ni en copy ni en CTAs ni en redes (regla extensible a comunicación off-site).</span>
+        </div>
+      </div>
+
+      <h3 class="sub" data-num="3.2">Hero como manifiesto</h3>
+      <p>
+        La frase del hero —<strong>"Pensamos, proyectamos y construimos los espacios que habitás"</strong>—
+        funciona como manifiesto: <em>tres verbos</em> que mapean los tres pilares de servicio,
+        y un cierre tuteado que cambia el sujeto de "el espacio" a "tu vida en él". No es
+        una frase de marketing; es la promesa de servicio empaquetada.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================== 04 ============================== -->
+  <section class="section" id="visual">
+    <header class="section-head">
+      <span class="section-num">§04</span>
+      <h2 class="section-title">Decisiones visuales.</h2>
+    </header>
+    <div class="section-body">
+
+      <h3 class="sub" data-num="4.1">Paleta</h3>
+      <p>
+        Un único color identitario —<strong>azul Nobra <code>#082c60</code></strong>—
+        más una paleta de neutros cálidos derivados del color hueso del papel arquitectónico.
+        Sin grises fríos. Sin colores saturados. Sin verdes/rojos/amarillos. El azul
+        aparece en logo, titulares, líneas finas y elementos interactivos; nunca como fondo
+        decorativo, sólo en bloques de jerarquía máxima ("Llave en mano", Contacto).
+      </p>
+
+      <div class="swatches">
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--nobra-blue);"></div>
+          <span class="swatch-use">Identidad</span>
+          <span class="swatch-name">Azul Nobra</span>
+          <span class="swatch-code">#082c60</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--bone);"></div>
+          <span class="swatch-use">Fondo dominante</span>
+          <span class="swatch-name">Hueso</span>
+          <span class="swatch-code">#f6f4ef</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--bone-2);"></div>
+          <span class="swatch-use">Fondo alterno</span>
+          <span class="swatch-name">Hueso 2</span>
+          <span class="swatch-code">#ece8df</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--ink);"></div>
+          <span class="swatch-use">Texto técnico</span>
+          <span class="swatch-name">Tinta</span>
+          <span class="swatch-code">#111111</span>
+        </div>
+      </div>
+
+      <p style="margin-top: 16px;">
+        El hueso (<code>#f6f4ef</code>) es ligeramente más cálido que blanco puro. Es una
+        referencia directa al papel arquitectónico y al yeso. Da una temperatura visual
+        que el blanco frío de los sitios de tecnología no tiene.
+      </p>
+
+      <h3 class="sub" data-num="4.2">Tipografía</h3>
+      <p>
+        Una sola familia: <strong>Montserrat</strong>. La elegimos porque <em>el SVG del logo ya está construido en
+        Montserrat thin</em>. Cambiar la familia hubiera obligado a rehacer el logo;
+        usar la misma garantiza coherencia entre marca y producto.
+      </p>
+
+      <ul class="clean">
+        <li><strong>Display (titulares):</strong> Montserrat Light 300 con tracking ajustado (<code>-0.02em</code>). Nunca Bold. El peso liviano comunica calma y disciplina, no agresividad.</li>
+        <li><strong>Body:</strong> Montserrat Regular 400 a 15–17px. Interlineado 1.65–1.7. Aire para que la lectura sea pausada.</li>
+        <li><strong>Eyebrows y nav:</strong> Montserrat Medium 500 a 11–12px, todo en mayúsculas, tracking <code>0.18em</code>. Referencia directa al lettering del logo (<code>NOBRA</code>).</li>
+        <li><strong>Mono:</strong> JetBrains Mono para numeración de secciones, metadatos y tags de plano. Refuerza el lenguaje técnico.</li>
+        <li><strong>Itálica:</strong> sólo en titulares, para énfasis emocional. Nunca en párrafos.</li>
+      </ul>
+
+      <h3 class="sub" data-num="4.3">Layout y composición</h3>
+      <p>
+        <strong>Grilla de 12 columnas</strong>, contenedor máximo de <code>1440px</code>,
+        gutter responsivo. Asimetría controlada: títulos a la izquierda, metadatos en
+        columna estrecha a la derecha. Mucho aire vertical entre secciones
+        (<code>clamp(80px, 10vw, 140px)</code>) — la respiración hace al lujo, no el adorno.
+      </p>
+      <p>
+        <strong>Numeración explícita</strong> de secciones (<code>01 · SERVICIOS</code>,
+        <code>02 · ESTUDIO</code>) — homenaje al lenguaje de planos. Cada bloque de la
+        página se siente como una lámina numerada del proyecto.
+      </p>
+
+      <h3 class="sub" data-num="4.4">Detalles que importan</h3>
+      <ul class="clean">
+        <li><strong>Radio 0.</strong> Todo recto. Excepción: pills de filtro en proyectos. Los bordes redondeados son del software, no de la arquitectura.</li>
+        <li><strong>Bordes 1px en <code>--line</code>.</strong> Para todas las divisiones de cards, kv-rows, listas. La línea es el material gráfico, no la sombra.</li>
+        <li><strong>Sombras: prácticamente nulas.</strong> El único uso es en el banner flotante del lead magnet, y es una sombra de tono azul, no gris.</li>
+        <li><strong>Animaciones ease-out (<code>cubic-bezier(0.22, 0.61, 0.36, 1)</code>),</strong> sin bounce. 180ms para micro, 360ms para UI, 700ms para reveals. Hover en imagen: scale 1.03 sutil. Nada rebotante.</li>
+        <li><strong>Header con backdrop-filter blur</strong> al hacer scroll. Único uso de transparencia en el sitio. La marca es plana y precisa.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================== 05 ============================== -->
+  <section class="section" id="paginas">
+    <header class="section-head">
+      <span class="section-num">§05</span>
+      <h2 class="section-title">Página por página.</h2>
+    </header>
+    <div class="section-body">
+
+      <h3 class="sub" data-num="5.1">Inicio</h3>
+      <p>
+        El Inicio funciona como <strong>resumen ejecutivo</strong>: hero declarativo,
+        tres pilares (Proyecto / Dirección / Asesoría) que mapean los tres clusters de
+        servicios, manifesto corto del estudio, y un strip oscuro con cuatro métricas
+        verificables. El usuario que sólo ve esta página tiene que entender: <em>quiénes
+        son, qué hacen, por qué confiar y cómo seguir</em>.
+      </p>
+      <p>
+        El strip de métricas está en azul de extremo a extremo y aparece <em>antes</em> del footer.
+        Cierra el Home con afirmación, no con un formulario más.
+      </p>
+
+      <h3 class="sub" data-num="5.2">Servicios — la más importante</h3>
+      <p>
+        Brief explícito: <strong>"NO usar lista de viñetas. Usar bloques visuales."</strong>
+        Resolvimos con tres bloques en cascada:
+      </p>
+      <ul class="clean">
+        <li><strong>Hero + Llave en mano.</strong> Page hero con números de plano, seguido inmediatamente por el bloque azul completo que vende el servicio integral. Es el primer impacto.</li>
+        <li><strong>Los 8 servicios como filas.</strong> Cada fila tiene número, título grande, detalle técnico en mono pequeño, frase de beneficio (no tarea: "Tu idea se vuelve un plano construible" en lugar de "Hacemos planos"), y flecha animada. Hover invierte el fondo. No es lista; es índice.</li>
+        <li><strong>Timeline de proceso.</strong> Cuatro etapas con barra horizontal — etapa 00 (primera reunión), 01 (anteproyecto), 02 (proyecto ejecutivo), 03 (obra y entrega). Le dice al cliente cómo va a ser trabajar con nosotros.</li>
+      </ul>
+
+      <h3 class="sub" data-num="5.3">Proyectos</h3>
+      <p>
+        Cinco proyectos conceptuales, cada uno con tres dibujos (planta + corte/axonometría
+        + detalle), descripción, metadatos (estado, superficie, programa, lote). Los
+        proyectos están etiquetados con su <strong>estado real</strong>: "Anteproyecto",
+        "Croquis", "Documentación". No mentimos que están construidos.
+      </p>
+      <p>
+        Las galerías están construidas con <strong>SVG line-art</strong> generadas en
+        sitio — son placeholders honestos. Cuando lleguen los renders y planos reales
+        del cliente, se reemplazan uno a uno sin tocar el layout. Filtro por tipología
+        (residencial / multifamiliar / comercial).
+      </p>
+
+      <h3 class="sub" data-num="5.4">El Estudio</h3>
+      <p>
+        La página de mayor lectura larga del sitio. Cuatro bloques en orden estratégico:
+      </p>
+      <ul class="clean">
+        <li><strong>Historia.</strong> Prosa larga con drop-cap, que admite explícitamente la juventud y la convierte en argumento. Cita arquitectónica de cierre.</li>
+        <li><strong>Fundadores.</strong> Dos retratos estilizados (pendientes de foto real) con biografía corta, matrícula y especialidad. Personaliza al estudio.</li>
+        <li><strong>Toolkit.</strong> Ocho herramientas profesionales con marca geométrica, función ("BIM · Modelado") y descripción. Esto es lo que vende solvencia técnica.</li>
+        <li><strong>Cierre.</strong> Bloque azul completo con CTA. La página termina invitando, no informando.</li>
+      </ul>
+
+      <h3 class="sub" data-num="5.5">Contacto</h3>
+      <p>
+        Doble objetivo: <strong>lead caliente</strong> (formulario) y <strong>lead frío</strong>
+        (lead magnet). El formulario incluye campos opcionales que ayudan a calificar
+        —presupuesto estimado, plazo, tipo de proyecto— sin volverlo pesado. El lead
+        magnet ofrece la guía descargable abajo de la fold.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================== 06 ============================== -->
+  <section class="section" id="imagenes">
+    <header class="section-head">
+      <span class="section-num">§06</span>
+      <h2 class="section-title">El problema de la imagen.</h2>
+    </header>
+    <div class="section-body">
+      <p class="lede">
+        El brief lo plantea como crucial: sin obras construidas, ¿qué fotos usamos?
+        La respuesta del diseño es <strong>convertir la ausencia en lenguaje</strong>.
+      </p>
+
+      <h3 class="sub" data-num="6.1">Tres estrategias combinadas</h3>
+      <ul class="clean">
+        <li>
+          <strong>Dibujo arquitectónico como protagonista.</strong>
+          Los proyectos se muestran con planos, cortes, axonometrías y detalles
+          —dibujos de arquitecto, no fotos—. Esto refuerza el oficio en vez de simularlo.
+          Y son entregables reales del estudio.
+        </li>
+        <li>
+          <strong>Placeholders honestos.</strong>
+          Donde habría una foto, hay un rectángulo etiquetado: "Render del estudio ·
+          próximamente". El visitante entiende que es un sitio nuevo, y eso construye
+          confianza, no la rompe. Es más profesional que stock genérico.
+        </li>
+        <li>
+          <strong>Tipografía como imagen.</strong>
+          El hero, el bloque "Llave en mano", la sección de cierre del Estudio —todos
+          usan tipografía grande sobre fondo plano como recurso visual. La marca
+          <em>NOBRA</em> a 28vw como watermark del hero es una decisión deliberada:
+          la palabra es el visual.
+        </li>
+      </ul>
+
+      <p>
+        <strong>Roadmap fotográfico:</strong> a medida que el estudio termine renders, fotografíe
+        bocetos, escanee planos, los puede sumar al sitio sin alterar la estructura.
+        Cada placeholder tiene su contenedor y su aspect ratio definidos. La transición
+        de un sitio sin fotos a un sitio con fotos no requiere rediseño.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================== 07 ============================== -->
+  <section class="section" id="lead">
+    <header class="section-head">
+      <span class="section-num">§07</span>
+      <h2 class="section-title">Captura de leads.</h2>
+    </header>
+    <div class="section-body">
+      <p class="lede">
+        El sitio tiene tres puntos de conversión, en orden de calidez del lead:
+      </p>
+
+      <div class="kv">
+        <div class="kv-row">
+          <span class="kv-k">Caliente</span>
+          <span class="kv-v"><strong>Formulario de contacto.</strong> Nombre, email, teléfono, tipo de proyecto, plazo, presupuesto, mensaje. El visitante que llega acá ya decidió escribir.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Tibio</span>
+          <span class="kv-v"><strong>Lead magnet — Checklist de 10 puntos antes de construir.</strong> Email a cambio de PDF. El visitante todavía no está listo, pero deja contacto. El newsletter posterior lo nutre.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Frío</span>
+          <span class="kv-v"><strong>Banner flotante.</strong> Aparece en todas las páginas (excepto Contacto) a los 1.8 segundos. Ofrece la guía sin sacar al usuario de su contexto.</span>
+        </div>
+      </div>
+
+      <p>
+        <strong>Lo que conscientemente <em>no</em> hicimos:</strong> popup modal de email
+        al entrar, chatbot, "salida con descuento", contador de visitas. Todo eso es
+        ruido publicitario que rompe el tono profesional. La conversión se cuida con
+        un diseño que invita, no con tácticas agresivas.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================== 08 ============================== -->
+  <section class="section" id="tecnico">
+    <header class="section-head">
+      <span class="section-num">§08</span>
+      <h2 class="section-title">Decisiones técnicas.</h2>
+    </header>
+    <div class="section-body">
+
+      <div class="kv">
+        <div class="kv-row">
+          <span class="kv-k">Arquitectura</span>
+          <span class="kv-v">SPA multi-página con ruteo por hash. Cinco rutas: <code>#home</code>, <code>#servicios</code>, <code>#proyectos</code>, <code>#estudio</code>, <code>#contacto</code>. Navegación instantánea, sin recarga. Cada cambio de ruta hace scroll al tope.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Mobile-first</span>
+          <span class="kv-v">Responsive desde 320px hasta 1440+. Breakpoints en 720px y 1024px. En mobile, nav hamburguesa lateral; en desktop, nav horizontal con CTA al extremo derecho.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Performance</span>
+          <span class="kv-v">Sin assets pesados — los placeholders son SVG inline (KB). Sin librerías de animación. Sin tracking de terceros. Fuente Montserrat servida de Google Fonts con <code>display: swap</code>.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Accesibilidad</span>
+          <span class="kv-v">Contraste AAA en el azul Nobra sobre hueso. Hit targets mínimos de 44px. Focus visible en formularios. Labels semánticos.</span>
+        </div>
+        <div class="kv-row">
+          <span class="kv-k">Modulación</span>
+          <span class="kv-v">Componentes React separados por página y por bloque. Cada sección es editable de forma aislada. El CSS usa tokens del design system —ningún color hardcodeado.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== 09 ============================== -->
+  <section class="section" id="pendientes">
+    <header class="section-head">
+      <span class="section-num">§09</span>
+      <h2 class="section-title">Pendientes con el cliente.</h2>
+    </header>
+    <div class="section-body">
+
+      <p class="lede">
+        El sitio está completo como prototipo, pero hay piezas de contenido que sólo el cliente puede definir.
+      </p>
+
+      <ul class="clean">
+        <li><strong>Misión, filosofía y valores.</strong> El design system marca este punto como pendiente. Hoy hay copy provisorio en El Estudio que cubre el espacio; conviene reemplazarlo con la versión definitiva del cliente.</li>
+        <li><strong>Biografías y fotos de los fundadores.</strong> Hoy hay placeholders de retrato y biografías genéricas. Necesitamos las versiones reales.</li>
+        <li><strong>Datos de contacto.</strong> Email, teléfono y dirección actuales son placeholders (<code>estudio@nobra.ar</code> · <code>+54 221 000 0000</code>).</li>
+        <li><strong>Renders y planos de los 5 proyectos.</strong> Las cinco fichas funcionan como contenedores con dibujos placeholder. A medida que estén los renders y planos finales, se reemplazan uno por uno.</li>
+        <li><strong>El PDF del lead magnet.</strong> "Checklist de 10 puntos antes de construir". Hoy el formulario simula el envío; falta el PDF real y el sistema de envío automático (Mailchimp, ConvertKit, o similar).</li>
+        <li><strong>Backend del formulario.</strong> Hoy el envío del formulario es simulado. Hay que conectarlo a un servicio (Formspree, Netlify Forms, o backend propio).</li>
+        <li><strong>Isotipo aislado.</strong> Para favicons y usos pequeños. Pendiente en el design system.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================== 10 / REFS ============================== -->
+  <div class="refs" id="refs">
+    <div class="refs-inner">
+      <div class="refs-eyebrow">§10 · Trazabilidad</div>
+      <h2 class="refs-title">Cada decisión se apoya en algo concreto.</h2>
+
+      <div class="refs-grid">
+        <div class="ref-row">
+          <span class="ref-row-n">A — Brief</span>
+          <span class="ref-row-name">Brief del cliente</span>
+          <span>Define paleta monocromática, sans-serif grande, layouts asimétricos, fotografía protagonista, restricciones explícitas (sin colores saturados, sin animaciones rebotantes), lista de servicios y estructura de 5 páginas.</span>
+        </div>
+        <div class="ref-row">
+          <span class="ref-row-n">B — DS</span>
+          <span class="ref-row-name">Nobra Design System</span>
+          <span>Tokens de color (<code>--nobra-blue</code>, <code>--bone</code>), tipografía (Montserrat), tono y voz (vos informal, primera persona plural, sin emoji), reglas de iconografía (Lucide via CDN), animación (ease único sin rebote).</span>
+        </div>
+        <div class="ref-row">
+          <span class="ref-row-n">C — Refs</span>
+          <span class="ref-row-name">Estudios de referencia</span>
+          <span>rbk.com.ar, bmaestudio.com.ar, edifizzi.com, amasr.com.ar — patrón compartido: hueso como fondo, tipografía liviana grande, dibujo arquitectónico como protagonista, animación sobria.</span>
+        </div>
+        <div class="ref-row">
+          <span class="ref-row-n">D — UI kit</span>
+          <span class="ref-row-name">UI kit Nobra · website</span>
+          <span>Punto de partida del prototipo. Hereda Header, Hero, Services, Footer, formularios y tokens; las páginas internas (Servicios completa, Proyectos, Estudio, Contacto) se construyeron sobre ese vocabulario.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== FOOT ============================== -->
+  <footer class="doc-foot">
+    <span>Nobra · Informe de diseño v01 · Mayo 2026</span>
+    <span><a href="index.html">Volver al sitio →</a></span>
+  </footer>
+
+</article>
+
+</body>
+</html>
