@@ -8,7 +8,7 @@ function App() {
   // Route state — sourced from hash, but defaults to home
   const getRouteFromHash = () => {
     const h = (window.location.hash || '#home').replace('#', '');
-    const valid = ['home','servicios','proyectos','estudio','contacto'];
+    const valid = ['home','servicios','proyectos','estudio','contacto', 'informe'];
     return valid.includes(h) ? h : 'home';
   };
 
