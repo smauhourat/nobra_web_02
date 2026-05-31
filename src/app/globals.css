@@ -825,6 +825,13 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
   .nb-founder-portrait { max-width: 200px; }
   .nb-leadmag-banner { left: 16px; right: 16px; bottom: 16px; max-width: none; }
   .nb-hero-wordmark { font-size: 28vw; bottom: -4vw; }
-  .nb-brand-mark-text { display: none;}  
+  .nb-brand-mark-text { display: none;}
   .nb-estudio-intro-side { position: static; }
+
+  /* Contacto mobile */
+  .nb-field-row { grid-template-columns: 1fr; gap: 20px; }
+  .nb-contact-info { margin-top: 40px; }
+  .nb-form-sent { padding: 32px 20px; }
+  .nb-leadmag-form { padding: 24px; }
+  .nb-contacto-page-title { font-size: clamp(36px, 10vw, 52px); }
 }
