@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react'
 
-export default function InformePage() {
+export default function GuiaPage() {
   useEffect(() => {
-    window.location.replace('/guia-construir.html')
+    window.location.replace('/guia.html')
   }, [])
   return null
 }
