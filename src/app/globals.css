@@ -228,9 +228,21 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
 }
 .nb-brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
 .nb-brand-mark { width: 85px; height: 85px; }
+.nb-brand-mark-text {
+  display: 'flex';
+  flex-direction: 'column'; 
+  line-height: 1;
+  margin-left: 9;
+}
 .nb-brand-text {
   font-family: var(--font-display); font-weight: 200; font-size: 20px;
   letter-spacing: 0.32em; color: var(--nobra-blue); text-transform: uppercase;
+}
+
+.nb-brand-tag {
+  font-size: 13px; 
+  color: var(--nobra-blue);
+  margin: 0;
 }
 .nb-nav { display: flex; gap: 32px; justify-content: center; }
 .nb-nav-link {
@@ -262,6 +274,17 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
 .nb-cta:hover { background: var(--nobra-blue-deep); border-color: var(--nobra-blue-deep); color: var(--bone); }
 .nb-cta-arrow { display: inline-block; transition: transform 360ms var(--ease-out); }
 .nb-cta:hover .nb-cta-arrow { transform: translateX(4px); }
+
+.nb-header.on-dark .nb-brand-text { color: var(--bone); }
+.nb-header.on-dark .nb-brand-tag { color: var(--bone); }
+.nb-header.on-dark .nb-nav-link { color: var(--bone); }
+.nb-header.on-dark .nb-nav-link::after { background: var(--bone); }
+.nb-header.on-dark .nb-nav-link.is-active { color: var(--bone); }
+.nb-header.on-dark .nb-nav-link.is-active::after { background: var(--bone); }
+.nb-header.on-dark .nb-cta { background: transparent; border-color: rgba(246,244,239,0.6); color: var(--bone); }
+.nb-header.on-dark .nb-cta:hover { background: var(--bone); border-color: var(--bone); color: var(--nobra-blue); }
+.nb-header.on-dark .nb-burger { border-color: var(--bone); }
+.nb-header.on-dark .nb-burger span { background: var(--bone); }
 
 .nb-burger {
   display: none;
@@ -780,6 +803,8 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
   .nb-service-row-benefit { grid-column: 1 / -1; padding-top: 8px; }
   .nb-leadmag-list { grid-template-columns: 1fr; }
   .nb-founder { grid-template-columns: 140px 1fr; }
+  .nb-brand-mark-text { display: none;}
+  .nb-cta { display: none; }
 }
 
 @media (max-width: 720px) {
@@ -799,4 +824,5 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
   .nb-founder-portrait { max-width: 200px; }
   .nb-leadmag-banner { left: 16px; right: 16px; bottom: 16px; max-width: none; }
   .nb-hero-wordmark { font-size: 28vw; bottom: -4vw; }
+  .nb-brand-mark-text { display: none;}
 }

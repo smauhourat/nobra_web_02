@@ -24,12 +24,21 @@ export default function Header() {
 
   useEffect(() => { setOpen(false) }, [pathname])
 
+  const onDark = (pathname === '/contacto' || pathname === '/contacto/') && !scrolled
+
   return (
     <>
-      <header className={`nb-header${scrolled ? ' is-scrolled' : ''}`}>
+      <header className={`nb-header${scrolled ? ' is-scrolled' : ''}${onDark ? ' on-dark' : ''}`}>
         <Link className="nb-brand" href="/" aria-label="Inicio">
-          <img className="nb-brand-mark" src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/logo-marca-color-2.svg`} alt="" />
-          {/* <span className="nb-brand-text">NobraA</span> */}
+          <img
+            className="nb-brand-mark"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/${onDark ? 'logo-marca-negativo.svg' : 'logo-marca-color-2.svg'}`}
+            alt=""
+          />
+          <div className="nb-brand-mark-text">
+            <p className="nb-brand-text">Nobra</p>
+            <p className="nb-brand-tag">Novoa &amp; Bravin Arquitectos</p>
+          </div>
         </Link>
 
         <nav className="nb-nav">
