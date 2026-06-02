@@ -780,6 +780,7 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
 .nb-footer-cols a, .nb-footer-cols li { color: rgba(246,244,239,0.78); font-size: 13px; text-decoration: none; transition: color 180ms var(--ease-out); }
 .nb-footer-cols a:hover { color: var(--bone); }
 .nb-footer-bottom { display: flex; justify-content: space-between; gap: 16px; padding-top: 24px; font-size: 11px; color: rgba(246,244,239,0.5); letter-spacing: 0.08em; }
+.nb-footer-bottom a {font-weight: 700; color: var(--bone)}
 
 /* =========================================================
    RESPONSIVE

@@ -47,6 +47,7 @@ export default function Footer() {
 
       <div className="nb-footer-bottom">
         <span>© 2026 Novoa &amp; Bravin Arquitectos · Mat. CAPBA</span>
+        <span>Desarrolado por <a href="https://www.adhentux.com" target="_blank" rel="noopener noreferrer">Adhentux</a></span>
         <span>Estudio joven · disciplina arquitectónica</span>
       </div>
     </footer>
