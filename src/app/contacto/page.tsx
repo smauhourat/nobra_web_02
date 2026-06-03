@@ -120,9 +120,10 @@ export default function ContactoPage() {
             <div className="nb-contact-info">
               <div><span>Estudio</span><b>CABA, Buenos Aires</b></div>
               <div><span>Email</span><b>estudio@nobra.ar</b></div>
-              <div><span>Teléfono</span><b>+54 221 000 0000</b></div>
+              <div><span>Teléfonos</span><b>+54 11 5338 0403</b></div>
+              <div><span>&nbsp;</span><b>+54 11 5506 8236</b></div>
               <div><span>Horario</span><b>Lun a Vie · 9 a 18 hs</b></div>
-              <div><span>Matrícula</span><b>CAPBA · D-V</b></div>
+              <div><span>Matrícula</span><b>CAPBA · CPAU</b></div>
             </div>
             <div style={{ marginTop: 48, paddingTop: 24, borderTop: '1px solid rgba(246,244,239,0.2)' }}>
               <div className="nb-leadmag-eyebrow" style={{ color: 'var(--bone)', marginBottom: 12 }}>
@@ -228,10 +229,15 @@ export default function ContactoPage() {
           ¿Preferís llamarnos? Estamos disponibles de Lunes a Viernes de 9 a 18 hs.
         </p>
         <div style={{ marginTop: 24 }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 200, fontSize: 'clamp(24px, 3vw, 36px)', color: 'var(--nobra-blue)', letterSpacing: '-0.01em' }}>
-            +54 221 000 0000
-          </span>
+            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 200, fontSize: 'clamp(24px, 3vw, 36px)', color: 'var(--nobra-blue)', letterSpacing: '-0.01em' }}>
+              +54 11 5338 0403
+            </span>
         </div>
+        <div style={{ marginTop: 14 }}>
+            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 200, fontSize: 'clamp(24px, 3vw, 36px)', color: 'var(--nobra-blue)', letterSpacing: '-0.01em' }}>
+              +54 11 5506 8236
+            </span>
+        </div>        
       </section>
     </div>
   )

@@ -12,7 +12,7 @@ const SERVICIOS = [
 ]
 
 const LLAVE_STAGES = [
-  { n: '01', t: 'Proyecto', d: 'Anteproyecto, ejecutivo y planos municipales. Decidimos juntos cada detalle constructivo antes de pedir el primer presupuesto.' },
+  { n: '01', t: 'Proyecto', d: 'Anteproyecto, proyecto ejecutivo y planos municipales. Decidimos juntos cada detalle constructivo antes de pedir el primer presupuesto.' },
   { n: '02', t: 'Dirección de obra', d: 'Coordinamos gremios, controlamos avance y calidad. Visitamos la obra semanalmente.' },
   { n: '03', t: 'Ejecución', d: 'Construcción con equipos propios y de confianza. Plazo cerrado, precio cerrado, responsable único.' },
   { n: '04', t: 'Entrega', d: 'Final de obra, conexiones, manual de usuario del inmueble. Te entregamos las llaves listo para mudarte.' },

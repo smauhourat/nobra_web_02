@@ -5,11 +5,11 @@ export default function Footer() {
     <footer className="nb-footer">
       <div className="nb-footer-top">
         <div className="nb-footer-brand">
-          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/logo-marca-negativo-4.svg`} alt="" className="nb-footer-mark" />
+          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/logo-blanco.svg`} alt="" className="nb-footer-mark" />
           <div className="nb-footer-wm">NOBRA</div>
           <p className="nb-footer-tag">Novoa &amp; Bravin Arquitectos</p>
           <p className="nb-footer-tag" style={{ maxWidth: '36ch', marginTop: 12, opacity: 0.7 }}>
-            Diseño integral, dirección y ejecución de obras en CABA y zona.
+            Diseño integral, dirección y ejecución de obras en CABA y Gran Buenos Aires.
           </p>
         </div>
 
@@ -38,7 +38,8 @@ export default function Footer() {
             <ul>
               <li>CABA, Buenos Aires</li>
               <li>estudio@nobra.ar</li>
-              <li>+54 221 000 0000</li>
+              <li>+54 11 5338 0403</li>
+              <li>+54 11 5506 8236</li>
               <li style={{ marginTop: 10 }}>Lun a Vie · 9 a 18 hs</li>
             </ul>
           </div>
@@ -46,7 +47,7 @@ export default function Footer() {
       </div>
 
       <div className="nb-footer-bottom">
-        <span>© 2026 Novoa &amp; Bravin Arquitectos · Mat. CAPBA</span>
+        <span>© 2026 Novoa &amp; Bravin Arquitectos · Mat. CAPBA - CPAU</span>
         <span>Desarrolado por <a href="https://www.adhentux.com" target="_blank" rel="noopener noreferrer">- Adhentux -</a></span>
         <span>Estudio joven · disciplina arquitectónica</span>
       </div>

@@ -3,15 +3,15 @@ import { DrawPortrait, ToolMark } from '@/components/Drawings'
 
 const FOUNDERS = [
   {
-    n: 'Novoa', full: 'Mat. arq. Novoa', role: 'Socio · Proyecto y obra',
-    bio: 'Seis años de experiencia profesional en estudios de vivienda y multifamiliar de la región. Antes de fundar Nobra trabajó como project leader en obras residenciales de hasta 1.500 m².',
-    meta: [['Matrícula', 'CAPBA · D-V'], ['Especialidad', 'Vivienda · Obra'], ['Software', 'Revit · ArchiCAD']] as [string, string][],
+    n: 'Novoa', full: 'Mat. arq. Ailén Novoa', role: 'Socia · Diseño e interiorismo',
+    bio: 'Seis años de experiencia en estudios de arquitectura integrales, trabajó como project leader en obras residenciales unifamiliares y multifamiliares, comercios y oficinas.',
+    meta: [['Matrícula', 'CPAU · N° 34738'], ['Especialidad', 'Vivienda · Interiorismo'], ['Software', 'Revit · Enscape']] as [string, string][],
     v: 1,
   },
   {
-    n: 'Bravin', full: 'Mat. arq. Bravin', role: 'Socia · Diseño e interiorismo',
-    bio: 'Seis años en estudios de interiorismo y comercial de Buenos Aires y CABA. Trabajó en proyectos de retail, gastronomía y vivienda de gama media-alta.',
-    meta: [['Matrícula', 'CAPBA · D-V'], ['Especialidad', 'Interiorismo · Retail'], ['Software', 'SketchUp · Twinmotion']] as [string, string][],
+    n: 'Bravin', full: 'Mat. arq. Martín G. Bravin', role: 'Socio · Proyecto y obra',
+    bio: 'Seis años de experiencia en empresa constructora como team leader. Trabajó tanto en proyectos de vivienda como industriales (automotrices, aeropuertos y centros comerciales).',
+    meta: [['Matrícula', 'CPAU · N° 35397'], ['Especialidad', 'Obra · Presupuestos'], ['Software', 'AutoCAD · Project']] as [string, string][],
     v: 2,
   },
 ]
@@ -22,7 +22,7 @@ const TOOLKIT = [
   { kind: 'autocad',    name: 'AutoCAD',    use: 'CAD · Detalles',          desc: 'Detalle constructivo y planos técnicos. La precisión que requieren los gremios.' },
   { kind: 'sketchup',   name: 'SketchUp',   use: '3D · Volumetría',         desc: 'Modelado conceptual rápido. Para iterar volumetrías con el cliente en reunión.' },
   { kind: 'twinmotion', name: 'Twinmotion', use: 'Render · Tiempo real',    desc: 'Renders fotorrealistas y recorridos virtuales. Ver el proyecto antes de construirlo.' },
-  { kind: 'rhino',      name: 'Rhino',      use: '3D · Geometría compleja', desc: 'Para piezas singulares: carpinterías, mobiliario, fachadas no estándar.' },
+  { kind: 'project',    name: 'Project',    use: 'Gestión de Proyectos',    desc: 'Para cronograma de obras. Gestión de tiempos, etapas críticas y superposición de tareas.' },
   { kind: 'enscape',    name: 'Enscape',    use: 'Render · Cliente',        desc: 'Render en tiempo real durante la reunión. Decisiones tomadas con la imagen final a la vista.' },
   { kind: 'notion',     name: 'Notion',     use: 'Gestión · Cliente',       desc: 'Cada proyecto tiene su tablero compartido. Documentos, fotos y avance en un solo lugar.' },
 ]
@@ -48,7 +48,7 @@ export default function EstudioPage() {
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Socios</span><span className="nb-page-hero-meta-v">02 · Novoa &amp; Bravin</span></div>
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Fundación</span><span className="nb-page-hero-meta-v">2026</span></div>
           <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Sede</span><span className="nb-page-hero-meta-v">CABA, Buenos Aires</span></div>
-          <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Matrícula</span><span className="nb-page-hero-meta-v">CAPBA · D-V</span></div>
+          <div className="nb-page-hero-meta-row"><span className="nb-page-hero-meta-k">Matrícula</span><span className="nb-page-hero-meta-v">CAPBA · CPAU</span></div>
         </div>
       </section>
 
@@ -57,7 +57,7 @@ export default function EstudioPage() {
         <div className="nb-estudio-intro-side">
           <span className="nb-eyebrow">
             <span className="nb-rule" />
-            02 · Historiaaaa
+            02 · Historia
           </span>
           <h2 className="nb-h2" style={{ marginTop: 20 }}>Por qué Nobra.</h2>
         </div>
