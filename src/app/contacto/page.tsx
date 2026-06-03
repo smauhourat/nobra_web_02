@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const CHECKLIST = [
   'Definir el programa real',
@@ -89,14 +89,60 @@ function LeadMagnet() {
 export default function ContactoPage() {
   const [form, setForm] = useState<FormData>(FORM_INIT)
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [csrfToken, setCsrfToken] = useState('')
+
+  useEffect(() => {
+    fetch('/contacto/init.php')
+      .then(r => r.json())
+      .then(d => setCsrfToken(d.csrf_token ?? ''))
+      .catch(() => {})
+  }, [])
 
   const update = (k: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }))
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSent(true)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setSending(true)
+    setError(null)
+
+    let token = csrfToken
+    if (!token) {
+      try {
+        const r = await fetch('/contacto/init.php')
+        const d = await r.json()
+        token = d.csrf_token ?? ''
+        setCsrfToken(token)
+      } catch {}
+    }
+
+    const data = new FormData()
+    data.append('csrf_token', token)
+    data.append('website_check', '')  // honeypot
+    data.append('nombre', form.nombre)
+    data.append('email', form.email)
+    data.append('telefono', form.telefono)
+    data.append('proyecto', form.proyecto)
+    data.append('presupuesto', form.presupuesto)
+    data.append('cuando', form.cuando)
+    data.append('mensaje', form.mensaje)
+
+    try {
+      const res = await fetch('/contacto/procesar.php', { method: 'POST', body: data })
+      const json = await res.json()
+      if (json.success) {
+        setSent(true)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else {
+        setError(json.message ?? 'Error al enviar. Intentá de nuevo.')
+      }
+    } catch {
+      setError('Error de conexión. Revisá tu internet e intentá de nuevo.')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -213,9 +259,14 @@ export default function ContactoPage() {
                     placeholder="¿Qué tenés en mente? ¿Tenés terreno, plano, presupuesto?"
                   />
                 </div>
-                <button className="nb-btn nb-btn-primary" type="submit">
-                  Empecemos tu proyecto →
+                <button className="nb-btn nb-btn-primary" type="submit" disabled={sending}>
+                  {sending ? 'Enviando...' : 'Empecemos tu proyecto →'}
                 </button>
+                {error && (
+                  <p style={{ fontSize: 14, color: '#e55', marginTop: 10, lineHeight: 1.5 }}>
+                    {error}
+                  </p>
+                )}
               </>
             )}
           </form>
