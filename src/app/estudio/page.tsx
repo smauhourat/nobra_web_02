@@ -3,13 +3,13 @@ import { DrawPortrait, ToolMark } from '@/components/Drawings'
 
 const FOUNDERS = [
   {
-    n: 'Novoa', full: 'Mat. arq. Ailén Novoa', role: 'Socia · Diseño e interiorismo',
+    n: 'Novoa', full: 'Arq. Ailén Novoa', role: 'Socia · Diseño e interiorismo',
     bio: 'Seis años de experiencia en estudios de arquitectura integrales, trabajó como project leader en obras residenciales unifamiliares y multifamiliares, comercios y oficinas.',
     meta: [['Matrícula', 'CPAU · N° 34738'], ['Especialidad', 'Vivienda · Interiorismo'], ['Software', 'Revit · Enscape']] as [string, string][],
     v: 1,
   },
   {
-    n: 'Bravin', full: 'Mat. arq. Martín G. Bravin', role: 'Socio · Proyecto y obra',
+    n: 'Bravin', full: 'Arq. Martín G. Bravin', role: 'Socio · Proyecto y obra',
     bio: 'Seis años de experiencia en empresa constructora como team leader. Trabajó tanto en proyectos de vivienda como industriales (automotrices, aeropuertos y centros comerciales).',
     meta: [['Matrícula', 'CPAU · N° 35397'], ['Especialidad', 'Obra · Presupuestos'], ['Software', 'AutoCAD · Project']] as [string, string][],
     v: 2,
