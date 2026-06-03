@@ -32,7 +32,7 @@ export default function Header() {
         <Link className="nb-brand" href="/" aria-label="Inicio">
           <img
             className="nb-brand-mark"
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/${onDark ? 'logo-blanco-2.svg' : 'logo-marca-color-4.svg'}`}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/${onDark ? 'logo-blanco-3.svg' : 'logo-marca-color-4.svg'}`}
             alt=""
           />
           <div className="nb-brand-mark-text">
