@@ -162,14 +162,27 @@
       align-items: center;
       gap: 4mm;
     }
-    .cover-brand img { width: 14mm; height: 14mm; }
+    .cover-brand .mark-text {
+      display: 'flex';
+      flex-direction: 'row'; 
+      line-height: 1;
+      margin-left: 9;
+    }
+    .cover-brand img { width: 24mm; height: 24mm; }
     .cover-brand .wm {
       font-family: var(--font-display);
-      font-weight: 200;
+      font-weight: 300;
       font-size: 14pt;
       letter-spacing: 0.32em;
       color: var(--nobra-blue);
       text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .cover-brand .tag {
+      font-size: 13px; 
+      color: var(--nobra-blue);
+      margin: 0;
     }
     .cover-meta-rows {
       display: flex;
@@ -744,6 +757,29 @@
     @media print {
       .print-fab { display: none; }
     }
+
+    /* ---------------------------------------------------------
+       WATERMARK — ADHENTUX on every page
+    --------------------------------------------------------- */
+    .page::before {
+      content: "ADHENTUX";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 80pt;
+      letter-spacing: 0.22em;
+      color: rgba(8, 44, 96, 0.07);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .page.inv::before {
+      color: rgba(246, 244, 239, 0.1);
+    }
   </style>
 </head>
 <body>
@@ -765,8 +801,11 @@
 
         <div class="cover-top">
           <div class="cover-brand">
-            <img src="/logo-marca-color.svg" alt="Nobra">
-            <span class="wm">NOBRA</span>
+            <img src="/logo-marca-color-4.svg" alt="Nobra">
+            <div class="mark-text">
+              <p class="wm">NOBRA</p>
+              <p class="tag">Novoa & Bravin Arquitectos</p>
+            </div>
           </div>
           <div></div>
           <div class="cover-meta-rows">
@@ -1545,11 +1584,11 @@
         <div class="closing-bottom">
           <div class="left">
             <span class="k">¿Querés conversarlo?</span>
-            <span class="v">hola@nobra.ar</span>
+            <span class="v">estudio@nobra.ar</span>
             <span class="sub">CABA, Buenos Aires · Argentina</span>
           </div>
           <div class="right">
-            <img src="/logo-marca-negativo.svg" alt="Nobra">
+            <img src="/logo-blanco-5.svg" alt="Nobra">
             <span class="wm">NOBRA</span>
           </div>
         </div>
