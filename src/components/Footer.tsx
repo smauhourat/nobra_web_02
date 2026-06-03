@@ -37,7 +37,7 @@ export default function Footer() {
             <span className="nb-eyebrow">Contacto</span>
             <ul>
               <li>CABA, Buenos Aires</li>
-              <li>estudio@nobra.ar</li>
+              <li>estudio@nobra.com.ar</li>
               <li>+54 11 5338 0403</li>
               <li>+54 11 5506 8236</li>
               <li style={{ marginTop: 10 }}>Lun a Vie · 9 a 18 hs</li>

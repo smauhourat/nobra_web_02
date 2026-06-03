@@ -73,7 +73,7 @@ export default function Header() {
           <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</Link>
         ))}
         <div className="nb-mobile-meta">
-          <span>estudio@nobra.ar</span>
+          <span>estudio@nobra.com.ar</span>
           <span>CABA, Buenos Aires</span>
         </div>
       </div>

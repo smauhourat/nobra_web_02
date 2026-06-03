@@ -165,7 +165,7 @@ export default function ContactoPage() {
             </p>
             <div className="nb-contact-info">
               <div><span>Estudio</span><b>CABA, Buenos Aires</b></div>
-              <div><span>Email</span><b>estudio@nobra.ar</b></div>
+              <div><span>Email</span><b>estudio@nobra.com.ar</b></div>
               <div><span>Teléfonos</span><b>+54 11 5338 0403</b></div>
               <div><span>&nbsp;</span><b>+54 11 5506 8236</b></div>
               <div><span>Horario</span><b>Lun a Vie · 9 a 18 hs</b></div>
