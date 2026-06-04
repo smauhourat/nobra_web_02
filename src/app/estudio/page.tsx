@@ -1,5 +1,6 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { DrawPortrait, ToolMark } from '@/components/Drawings'
+import { ToolMark } from '@/components/Drawings'
 
 const FOUNDERS = [
   {
@@ -7,12 +8,14 @@ const FOUNDERS = [
     bio: 'Seis años de experiencia en estudios de arquitectura integrales, trabajó como project leader en obras residenciales unifamiliares y multifamiliares, comercios y oficinas.',
     meta: [['Matrícula', 'CPAU · N° 34738'], ['Especialidad', 'Vivienda · Interiorismo'], ['Software', 'Revit · Enscape']] as [string, string][],
     v: 1,
+    img: '/ailen-novoa.webp',
   },
   {
     n: 'Bravin', full: 'Arq. Martín G. Bravin', role: 'Socio · Proyecto y obra',
     bio: 'Seis años de experiencia en empresa constructora como team leader. Trabajó tanto en proyectos de vivienda como industriales (automotrices, aeropuertos y centros comerciales).',
     meta: [['Matrícula', 'CPAU · N° 35397'], ['Especialidad', 'Obra · Presupuestos'], ['Software', 'AutoCAD · Project']] as [string, string][],
     v: 2,
+    img: '/martin-bravin.webp',
   },
 ]
 
@@ -105,8 +108,13 @@ export default function EstudioPage() {
           {FOUNDERS.map(f => (
             <article key={f.n} className="nb-founder">
               <div className="nb-founder-portrait">
-                <DrawPortrait variant={f.v} />
-                <span className="nb-founder-portrait-tag">Retrato · pendiente</span>
+                <Image
+                  src={f.img}
+                  alt={f.full}
+                  width={400}
+                  height={500}
+                  className="nb-founder-portrait-img"
+                />
               </div>
               <div>
                 <h3 className="nb-founder-name">{f.full}</h3>
