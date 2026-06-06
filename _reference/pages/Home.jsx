@@ -8,7 +8,7 @@ function Hero({ tweaks, onNav }) {
       <div className="nb-hero-content">
         <div className="nb-eyebrow nb-eyebrow-num">
           <span className="nb-rule"></span>
-          Estudio de arquitectura · CABA · Bs. As.
+          Estudio de arquitectura · La Plata · Bs. As.
         </div>
 
         <h1 className="nb-display">
@@ -25,7 +25,7 @@ function Hero({ tweaks, onNav }) {
         <div className="nb-hero-actions">
           <button className="nb-btn nb-btn-primary"
                   onClick={() => onNav('contacto')}>
-            Contanos tu idea
+            Cuéntanos tu idea
           </button>
           <button className="nb-btn nb-btn-text"
                   onClick={() => onNav('servicios')}>
@@ -46,7 +46,7 @@ function Hero({ tweaks, onNav }) {
           </div>
           <div className="nb-meta-row">
             <span className="nb-meta-k">Sede</span>
-            <span className="nb-meta-v">CABA, BA</span>
+            <span className="nb-meta-v">La Plata, BA</span>
           </div>
           <div className="nb-meta-row">
             <span className="nb-meta-k">Servicio</span>

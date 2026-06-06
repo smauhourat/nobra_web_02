@@ -1,0 +1,1546 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nobra · Guía para construir en Argentina</title>
+  <link rel="stylesheet" href="ds/colors_and_type.css">
+  <style>
+    /* =========================================================
+       PRINT — A4 portrait, 1 page per .page
+       ========================================================= */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    :root {
+      --page-w: 210mm;
+      --page-h: 297mm;
+      --pad-x: 18mm;
+      --pad-y: 18mm;
+    }
+
+    html, body {
+      background: #d9d6cf; /* viewer chrome — outside pages */
+      color: var(--fg-2);
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .doc {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8mm;
+      padding: 16mm 0;
+    }
+
+    .page {
+      width: var(--page-w);
+      height: var(--page-h);
+      background: var(--bone);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 24px -8px rgba(8,44,96,0.18);
+      color: var(--fg-2);
+    }
+    .page.inv { background: var(--nobra-blue); color: var(--bone); }
+    .page.bone2 { background: var(--bone-2); }
+
+    @media print {
+      html, body { background: #fff; }
+      .doc { padding: 0; gap: 0; }
+      .page {
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-child { page-break-after: auto; break-after: auto; }
+    }
+
+    /* ---------------------------------------------------------
+       Page chrome — header + footer with running info
+    --------------------------------------------------------- */
+    .pg-header {
+      position: absolute;
+      top: 10mm;
+      left: var(--pad-x);
+      right: var(--pad-x);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      font: 500 8pt/1 var(--font-sans);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-300);
+    }
+    .pg-header .center { text-align: center; }
+    .pg-header .right { text-align: right; color: var(--nobra-blue); }
+    .pg-header.inv, .pg-header.inv .right { color: rgba(246,244,239,0.55); }
+    .pg-header.inv .right { color: var(--bone); }
+
+    .pg-footer {
+      position: absolute;
+      bottom: 10mm;
+      left: var(--pad-x);
+      right: var(--pad-x);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      font: 500 8pt/1 var(--font-sans);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone-300);
+      padding-top: 4mm;
+      border-top: 0.4pt solid var(--line);
+    }
+    .pg-footer .center { text-align: center; color: var(--nobra-blue); font-family: var(--font-display); font-weight: 200; letter-spacing: 0.32em; }
+    .pg-footer .right { text-align: right; font-family: var(--font-mono); letter-spacing: 0.05em; color: var(--stone-500); }
+
+    .pg-footer.inv {
+      color: rgba(246,244,239,0.5);
+      border-top-color: rgba(246,244,239,0.2);
+    }
+    .pg-footer.inv .center { color: var(--bone); }
+    .pg-footer.inv .right { color: rgba(246,244,239,0.7); }
+
+    /* Page content body — between header and footer */
+    .pg-body {
+      position: absolute;
+      top: 22mm;
+      left: var(--pad-x);
+      right: var(--pad-x);
+      bottom: 22mm;
+    }
+
+    /* ---------------------------------------------------------
+       COVER
+    --------------------------------------------------------- */
+    .cover .pg-body {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 0;
+    }
+
+    .cover-top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12mm;
+      align-items: center;
+      padding-bottom: 8mm;
+      border-bottom: 0.5pt solid var(--line);
+    }
+    .cover-brand {
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+    }
+    .cover-brand img { width: 14mm; height: 14mm; }
+    .cover-brand .wm {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 14pt;
+      letter-spacing: 0.32em;
+      color: var(--nobra-blue);
+      text-transform: uppercase;
+    }
+    .cover-meta-rows {
+      display: flex;
+      gap: 14mm;
+      justify-content: flex-end;
+    }
+    .cover-meta-rows .row { display: flex; flex-direction: column; gap: 2mm; font-size: 7.5pt; }
+    .cover-meta-rows .k { font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone-300); }
+    .cover-meta-rows .v { color: var(--nobra-blue); font-weight: 500; }
+
+    .cover-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 16mm 0;
+    }
+    .cover-eyebrow {
+      display: inline-flex; align-items: center; gap: 4mm;
+      font: 500 9pt/1 var(--font-sans);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--nobra-blue);
+      margin-bottom: 12mm;
+    }
+    .cover-eyebrow .rule { width: 16mm; height: 0.5pt; background: var(--nobra-blue); display: inline-block; }
+    .cover-title {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 56pt;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      color: var(--nobra-blue);
+      margin: 0 0 10mm;
+      text-wrap: balance;
+      max-width: 18ch;
+    }
+    .cover-title em { font-style: italic; font-weight: 300; }
+    .cover-subtitle {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-style: italic;
+      font-size: 16pt;
+      line-height: 1.3;
+      color: var(--nobra-blue);
+      margin: 0;
+      max-width: 28ch;
+    }
+    .cover-lede {
+      font-size: 11pt;
+      line-height: 1.55;
+      color: var(--stone-500);
+      max-width: 56ch;
+      margin: 10mm 0 0;
+    }
+
+    .cover-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8mm;
+      align-items: end;
+      padding-top: 8mm;
+      border-top: 0.5pt solid var(--line);
+    }
+    .cover-bottom .author {
+      display: flex; flex-direction: column; gap: 1mm;
+    }
+    .cover-bottom .author .k { font: 500 7.5pt/1 var(--font-sans); letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone-300); margin-bottom: 1mm; }
+    .cover-bottom .author .v { font-family: var(--font-display); font-weight: 300; font-size: 18pt; letter-spacing: -0.01em; color: var(--nobra-blue); }
+    .cover-bottom .author .sub { font-size: 9pt; color: var(--stone-500); margin-top: 1mm; }
+    .cover-bottom .index {
+      display: flex; flex-direction: column; gap: 2mm;
+    }
+    .cover-bottom .index .row {
+      display: grid; grid-template-columns: 14mm 1fr;
+      font-size: 8pt;
+      padding: 1.6mm 0;
+      border-top: 0.4pt solid var(--line);
+    }
+    .cover-bottom .index .row:last-child { border-bottom: 0.4pt solid var(--line); }
+    .cover-bottom .index .num {
+      font-family: var(--font-mono);
+      color: var(--stone-300);
+      letter-spacing: 0.1em;
+    }
+    .cover-bottom .index .lbl {
+      color: var(--nobra-blue);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Cover watermark — big NOBRA at bottom-right */
+    .cover-wm {
+      position: absolute;
+      right: -3mm;
+      bottom: 32mm;
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 140pt;
+      letter-spacing: 0.04em;
+      color: var(--bone-2);
+      line-height: 0.85;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .cover-center, .cover-top, .cover-bottom { position: relative; z-index: 1; }
+
+    /* ---------------------------------------------------------
+       INTRO PAGE
+    --------------------------------------------------------- */
+    .intro .pg-body {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 12mm;
+      align-content: start;
+      padding-top: 18mm;
+    }
+    .intro-side {
+      display: flex; flex-direction: column; gap: 6mm;
+    }
+    .intro-side .eyebrow {
+      font: 500 9pt/1 var(--font-sans);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--nobra-blue);
+    }
+    .intro-side .num {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 80pt;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--nobra-blue);
+      margin: 0;
+    }
+    .intro-side .meta {
+      margin-top: 8mm;
+      display: flex; flex-direction: column; gap: 3mm;
+      padding-top: 4mm;
+      border-top: 0.5pt solid var(--line);
+      font-size: 8pt;
+    }
+    .intro-side .meta div {
+      display: flex; justify-content: space-between; gap: 4mm;
+    }
+    .intro-side .meta .k { color: var(--stone-300); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; }
+    .intro-side .meta .v { color: var(--nobra-blue); font-weight: 500; }
+
+    .intro-main {
+      display: flex; flex-direction: column; gap: 8mm;
+    }
+    .intro-h {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 32pt;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--nobra-blue);
+      margin: 0;
+      text-wrap: balance;
+    }
+    .intro-h em { font-style: italic; font-weight: 300; }
+    .intro-p {
+      font-size: 11pt;
+      line-height: 1.65;
+      color: var(--stone-500);
+      max-width: 56ch;
+      margin: 0;
+    }
+    .intro-p strong { color: var(--nobra-blue); font-weight: 500; }
+    .intro-p:first-of-type {
+      font-size: 13pt;
+      line-height: 1.55;
+      color: var(--stone-700);
+    }
+
+    /* ---------------------------------------------------------
+       POINT — each of the 10 numbered points
+    --------------------------------------------------------- */
+    .point .pg-body {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 0;
+      padding-top: 14mm;
+    }
+
+    .point-num-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 6mm;
+      padding-bottom: 6mm;
+    }
+    .point-num {
+      font-family: var(--font-mono);
+      font-size: 9pt;
+      color: var(--stone-300);
+      letter-spacing: 0.18em;
+    }
+    .point-num b { color: var(--nobra-blue); font-weight: 500; }
+    .point-rule {
+      height: 0.5pt; background: var(--line); width: 100%;
+    }
+    .point-tag {
+      font: 500 8pt/1 var(--font-sans);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--nobra-blue);
+      border: 0.5pt solid var(--nobra-blue);
+      padding: 2mm 4mm;
+    }
+
+    .point-title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 28pt;
+      line-height: 1.04;
+      letter-spacing: -0.01em;
+      color: var(--nobra-blue);
+      margin: 4mm 0 8mm;
+      max-width: 22ch;
+      text-wrap: balance;
+    }
+    .point-title em { font-style: italic; font-weight: 300; }
+
+    .point-body {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 5mm;
+      max-width: 75ch;
+      padding-top: 4mm;
+      border-top: 0.5pt solid var(--line);
+    }
+    .point-body p {
+      font-size: 10.5pt;
+      line-height: 1.7;
+      color: var(--stone-500);
+      margin: 0;
+    }
+    .point-body p strong {
+      color: var(--nobra-blue);
+      font-weight: 500;
+    }
+
+    /* Pull-quote inside a point */
+    .point-pull {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 15pt;
+      line-height: 1.35;
+      color: var(--nobra-blue);
+      border-left: 0.6pt solid var(--nobra-blue);
+      padding: 2mm 0 2mm 6mm;
+      margin: 4mm 0 4mm;
+      max-width: 50ch;
+    }
+
+    /* Two-column layout for the data callout below the body */
+    .point-data {
+      margin-top: 6mm;
+      padding-top: 4mm;
+      border-top: 0.5pt solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm 12mm;
+    }
+    .point-data .cell {
+      display: flex; flex-direction: column; gap: 1.5mm;
+    }
+    .point-data .k {
+      font: 500 7.5pt/1 var(--font-sans);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--stone-300);
+    }
+    .point-data .v {
+      font-size: 9.5pt;
+      color: var(--nobra-blue);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ---------------------------------------------------------
+       Two-points-per-page layout — used for compact points
+    --------------------------------------------------------- */
+    .duo .pg-body {
+      padding-top: 14mm;
+      display: grid;
+      grid-template-rows: 1fr 0 1fr;
+      gap: 0;
+    }
+    .duo .divider {
+      height: 0;
+      border-top: 0.5pt solid var(--line);
+      margin: 8mm 0;
+    }
+    .duo .point-block {
+      display: grid;
+      grid-template-columns: 22mm 1fr;
+      gap: 8mm;
+    }
+    .duo .point-block .num {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 48pt;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--nobra-blue);
+    }
+    .duo .point-block .num-sub {
+      font-family: var(--font-mono);
+      font-size: 7.5pt;
+      letter-spacing: 0.18em;
+      color: var(--stone-300);
+      margin-top: 2mm;
+    }
+    .duo .point-block .title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 18pt;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--nobra-blue);
+      margin: 0 0 4mm;
+      max-width: 30ch;
+    }
+    .duo .point-block .title em { font-style: italic; font-weight: 300; }
+    .duo .point-block .body p {
+      font-size: 10pt;
+      line-height: 1.6;
+      color: var(--stone-500);
+      margin: 0 0 3mm;
+    }
+    .duo .point-block .body p:last-child { margin-bottom: 0; }
+    .duo .point-block .body p strong { color: var(--nobra-blue); font-weight: 500; }
+
+    /* ---------------------------------------------------------
+       RESOURCES PAGE
+    --------------------------------------------------------- */
+    .resources .pg-body {
+      padding-top: 18mm;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 8mm;
+    }
+    .res-head {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 8mm;
+      align-items: end;
+      padding-bottom: 4mm;
+      border-bottom: 0.5pt solid var(--line);
+    }
+    .res-head .left .eyebrow {
+      font: 500 9pt/1 var(--font-sans);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--nobra-blue);
+      margin-bottom: 4mm;
+      display: block;
+    }
+    .res-head .left .num {
+      font-family: var(--font-mono);
+      font-size: 8pt;
+      color: var(--stone-300);
+      letter-spacing: 0.18em;
+    }
+    .res-head .right .title {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 36pt;
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      color: var(--nobra-blue);
+      margin: 0;
+      text-wrap: balance;
+    }
+    .res-head .right .title em { font-style: italic; font-weight: 300; }
+    .res-head .right .sub {
+      font-size: 10pt;
+      line-height: 1.55;
+      color: var(--stone-500);
+      margin: 4mm 0 0;
+      max-width: 55ch;
+    }
+
+    .res-groups {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8mm;
+    }
+    .res-group h4 {
+      font: 500 9pt/1 var(--font-sans);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--nobra-blue);
+      margin: 0 0 4mm;
+      padding-bottom: 3mm;
+      border-bottom: 0.4pt solid var(--line);
+    }
+    .res-list {
+      list-style: none; padding: 0; margin: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .res-list li {
+      display: grid;
+      grid-template-columns: 10mm 1fr;
+      gap: 4mm;
+      padding: 3mm 0;
+      border-bottom: 0.3pt solid var(--line);
+      align-items: baseline;
+    }
+    .res-list li:last-child { border-bottom: 0; }
+    .res-list .ix {
+      font-family: var(--font-mono);
+      font-size: 7.5pt;
+      color: var(--stone-300);
+      letter-spacing: 0.15em;
+    }
+    .res-list .name {
+      font-size: 10pt;
+      color: var(--nobra-blue);
+      font-weight: 500;
+      line-height: 1.4;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 2.5mm;
+      transition: color 180ms var(--ease-out);
+    }
+    .res-list a.name:hover { color: var(--nobra-blue-deep); }
+    .res-list a.name:hover .arr { transform: translateX(2mm); }
+    .res-list .name .arr {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      font-size: 9pt;
+      color: var(--nobra-blue);
+      transition: transform 360ms var(--ease-out);
+      display: inline-block;
+    }
+    .res-list .desc {
+      font-size: 9pt;
+      color: var(--stone-500);
+      line-height: 1.5;
+      display: block;
+      margin-top: 1mm;
+      font-weight: 400;
+    }
+    .res-list .url {
+      font-family: var(--font-mono);
+      font-size: 7.5pt;
+      color: var(--stone-300);
+      letter-spacing: 0.05em;
+      display: block;
+      margin-top: 1mm;
+      text-transform: lowercase;
+    }
+
+    /* ---------------------------------------------------------
+       CLOSING — inverted blue page
+    --------------------------------------------------------- */
+    .closing .pg-body {
+      padding-top: 24mm;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 0;
+    }
+    .closing-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8mm;
+      align-items: center;
+      padding-bottom: 8mm;
+      border-bottom: 0.5pt solid rgba(246,244,239,0.25);
+    }
+    .closing-top .eyebrow {
+      font: 500 9pt/1 var(--font-sans);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--bone);
+      display: inline-flex; align-items: center; gap: 4mm;
+    }
+    .closing-top .eyebrow .rule { width: 14mm; height: 0.5pt; background: var(--bone); }
+
+    .closing-center {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 18mm 0;
+    }
+    .closing-title {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 44pt;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--bone);
+      margin: 0 0 8mm;
+      max-width: 18ch;
+      text-wrap: balance;
+    }
+    .closing-title em { font-style: italic; font-weight: 300; }
+    .closing-body {
+      font-size: 12pt;
+      line-height: 1.65;
+      color: rgba(246,244,239,0.85);
+      max-width: 56ch;
+      margin: 0 0 6mm;
+    }
+    .closing-pull {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 18pt;
+      line-height: 1.35;
+      color: var(--bone);
+      border-left: 0.6pt solid var(--bone);
+      padding: 2mm 0 2mm 6mm;
+      margin: 10mm 0 0;
+      max-width: 44ch;
+    }
+
+    .closing-bottom {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8mm;
+      align-items: end;
+      padding-top: 8mm;
+      border-top: 0.5pt solid rgba(246,244,239,0.25);
+    }
+    .closing-bottom .left { display: flex; flex-direction: column; gap: 2mm; }
+    .closing-bottom .k {
+      font: 500 7.5pt/1 var(--font-sans);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(246,244,239,0.55);
+    }
+    .closing-bottom .v {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 18pt;
+      letter-spacing: -0.01em;
+      color: var(--bone);
+    }
+    .closing-bottom .sub { font-size: 9pt; color: rgba(246,244,239,0.7); margin-top: 1mm; }
+    .closing-bottom .right { display: flex; align-items: center; gap: 4mm; }
+    .closing-bottom .right img { width: 16mm; height: 16mm; }
+    .closing-bottom .right .wm {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: 12pt;
+      letter-spacing: 0.32em;
+      color: var(--bone);
+      text-transform: uppercase;
+    }
+
+    /* ---------------------------------------------------------
+       Print button — hidden in print
+    --------------------------------------------------------- */
+    .print-fab {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 100;
+      background: var(--nobra-blue);
+      color: var(--bone);
+      border: 1px solid var(--nobra-blue);
+      font: 500 11px/1 var(--font-sans);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 14px 22px;
+      cursor: pointer;
+      transition: background 180ms var(--ease-out);
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .print-fab:hover { background: var(--nobra-blue-deep); }
+    .print-fab svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+    @media print {
+      .print-fab { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-fab" onclick="window.print()">
+    <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+    Imprimir / Guardar PDF
+  </button>
+
+  <div class="doc">
+
+    <!-- =====================================================
+         PAGE 1 — COVER
+         ===================================================== -->
+    <section class="page cover">
+      <div class="cover-wm">NOBRA</div>
+
+      <div class="pg-body">
+
+        <div class="cover-top">
+          <div class="cover-brand">
+            <img src="assets/logo-marca-color.svg" alt="Nobra">
+            <span class="wm">NOBRA</span>
+          </div>
+          <div></div>
+          <div class="cover-meta-rows">
+            <div class="row"><span class="k">Documento</span><span class="v">GUÍA · 01</span></div>
+            <div class="row"><span class="k">Año</span><span class="v">2026</span></div>
+            <div class="row"><span class="k">Páginas</span><span class="v">14</span></div>
+          </div>
+        </div>
+
+        <div class="cover-center">
+          <span class="cover-eyebrow"><span class="rule"></span>Guía para clientes · 01</span>
+          <h1 class="cover-title">GUÍA <em>para construir</em><br>en Argentina</h1>
+          <p class="cover-subtitle">10 puntos clave antes de firmar el primer plano.</p>
+          <p class="cover-lede">
+            Construir una casa es una de las decisiones financieras y personales
+            más importantes que vas a tomar. Esta guía está pensada para que
+            tengas todo resuelto <em>antes</em> de comenzar. No es
+            magia ni secreto profesional: es pura planificación.
+          </p>
+        </div>
+
+        <div class="cover-bottom">
+          <div class="author">
+            <span class="k">Edita</span>
+            <span class="v">Novoa &amp; Bravin Arquitectos</span>
+            <span class="sub">Estudio de arquitectura · La Plata, Buenos Aires</span>
+          </div>
+          <div class="index">
+            <div class="row"><span class="num">01—05</span><span class="lbl">Programa, terreno, código, factibilidad, presupuesto</span></div>
+            <div class="row"><span class="num">06—10</span><span class="lbl">Honorarios, plazos, contingencia, constructor, contratos</span></div>
+            <div class="row"><span class="num">11</span><span class="lbl">Recursos &amp; consejo final</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Novoa &amp; Bravin Arquitectos</div>
+        <div class="center">NOBRA</div>
+        <div class="right">01 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 2 — INTRO
+         ===================================================== -->
+    <section class="page intro bone2">
+      <div class="pg-header">
+        <div class="left">Guía para construir · Argentina · 2026</div>
+        <div class="center"></div>
+        <div class="right">Introducción</div>
+      </div>
+
+      <div class="pg-body">
+        <aside class="intro-side">
+          <span class="eyebrow">00 · Antes de empezar</span>
+          <p class="num">00</p>
+          <div class="meta">
+            <div><span class="k">Lectura</span><span class="v">12 min</span></div>
+            <div><span class="k">Audiencia</span><span class="v">Clientes</span></div>
+            <div><span class="k">Idioma</span><span class="v">ES · AR</span></div>
+            <div><span class="k">Versión</span><span class="v">1.0</span></div>
+          </div>
+        </aside>
+
+        <div class="intro-main">
+          <h2 class="intro-h">
+            La emoción de empezar puede hacer que se pasen por alto algunos
+            <em>pasos que después se pagan caros.</em>
+          </h2>
+          <p class="intro-p">
+            Construir una casa es probablemente una de las decisiones financieras
+            y personales más importantes que vas a tomar. La emoción de empezar
+            puede hacer que se pasen por alto algunos pasos que después se pagan
+            caros. Esta guía está pensada para que tengas todo resuelto
+            <strong>antes</strong> de comenzar.
+          </p>
+          <p class="intro-p">
+            No es magia ni secreto profesional: es pura planificación. Los diez
+            puntos que siguen son el orden con el que en Nobra abordamos un
+            proyecto antes de pasar a la mesa de dibujo. Si tu obra ya empezó y
+            algunos de estos puntos están sin resolver, no es tarde: lo importante
+            es identificarlos y cerrarlos uno por uno.
+          </p>
+          <p class="intro-p">
+            Pensá la guía como una <strong>lista de comprobación</strong>.
+            Marcá lo que ya tenés. Anotá lo que falta. La construcción es
+            una conversación larga; conviene que arranque ordenada.
+          </p>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">02 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 3 — POINT 01
+         ===================================================== -->
+    <section class="page point">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 01</div>
+        <div class="center"></div>
+        <div class="right">Programa real</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>01</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 01</span>
+        </div>
+
+        <h2 class="point-title">Definir el programa real <em>(y ser honesto con vos mismo)</em></h2>
+
+        <div class="point-body">
+          <p>
+            Empezá por anotar qué necesidades tiene tu familia hoy y cuáles
+            tendrá en 5 o 10 años: <strong>cantidad de dormitorios, baños,
+            espacios de estar, cocina, lavadero, cochera, quincho o depósito</strong>.
+            No es solo la superficie construida; es cómo habitás.
+          </p>
+          <p>
+            Muchas veces se proyecta una casa enorme que termina siendo fría
+            y difícil de mantener. Un <strong>programa de necesidades</strong>
+            bien pensado evita modificaciones en obra, que suelen ser caras y
+            generan demoras.
+          </p>
+          <p>
+            Si podés, entrevistá a varios arquitectos antes de decidir; cada
+            profesional tiene su enfoque y te puede ayudar a encontrar
+            soluciones que no habías considerado.
+          </p>
+
+          <div class="point-data">
+            <div class="cell"><span class="k">Cuándo</span><span class="v">Antes de cualquier croquis o anteproyecto.</span></div>
+            <div class="cell"><span class="k">Quién</span><span class="v">Vos, tu familia, y al menos dos arquitectos.</span></div>
+            <div class="cell"><span class="k">Salida</span><span class="v">Documento de programa: m², usos, prioridades.</span></div>
+            <div class="cell"><span class="k">Tiempo</span><span class="v">2 a 4 semanas de conversación.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">03 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 4 — POINT 02
+         ===================================================== -->
+    <section class="page point bone2">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 02</div>
+        <div class="center"></div>
+        <div class="right">Terreno &amp; escritura</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>02</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 02</span>
+        </div>
+
+        <h2 class="point-title">Tener la escritura del terreno <em>y la documentación en regla</em></h2>
+
+        <div class="point-body">
+          <p>
+            Antes de pensar en planos, asegurate de que el terreno es tuyo o
+            que tenés garantías reales de posesión. <strong>Sin escritura
+            pública o boleto de compraventa inscripto, no hay obra legal.</strong>
+          </p>
+          <p>
+            Revisá que el inmueble no tenga inhibiciones, embargos o deudas
+            impositivas (ABL, impuesto inmobiliario). También verificá los
+            <strong>límites y medidas con un agrimensor</strong> para que la
+            futura construcción no invada terrenos vecinos o la vía pública.
+          </p>
+          <p>
+            Contratar una <strong>certificación de dominio actualizada</strong>
+            te va a dar tranquilidad y es un trámite relativamente económico
+            que evita disgustos muy caros más adelante.
+          </p>
+
+          <div class="point-data">
+            <div class="cell"><span class="k">Documentos</span><span class="v">Escritura · boleto inscripto · plano de mensura.</span></div>
+            <div class="cell"><span class="k">Profesional</span><span class="v">Escribano + agrimensor matriculado.</span></div>
+            <div class="cell"><span class="k">Verificá</span><span class="v">Inhibiciones, embargos, ABL al día.</span></div>
+            <div class="cell"><span class="k">Salida</span><span class="v">Certificación de dominio vigente.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">04 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 5 — POINT 03
+         ===================================================== -->
+    <section class="page point">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 03</div>
+        <div class="center"></div>
+        <div class="right">Código urbano</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>03</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 03</span>
+        </div>
+
+        <h2 class="point-title">Conocer el código urbano <em>de tu municipio</em></h2>
+
+        <div class="point-body">
+          <p>
+            Cada municipio o comuna tiene su propio <strong>Código de
+            Ordenamiento Urbano</strong> que regula: <strong>retiros
+            obligatorios de frente, laterales y fondo, altura máxima de la
+            edificación, porcentaje de ocupación del terreno, usos permitidos
+            (solo vivienda, comercio, etc.) y densidad habitacional</strong>.
+          </p>
+          <p>
+            Si proyectás algo que no cumpla estas normas, el permiso de obra
+            va a ser rechazado. Por ejemplo, en la Ciudad de Buenos Aires
+            está vigente un nuevo Código Urbanístico desde 2025 que modificó
+            muchos parámetros.
+          </p>
+          <p>
+            Es obligación del arquitecto verificar esto, pero vos como
+            cliente tenés derecho a pedir un <strong>informe urbanístico
+            municipal</strong> antes de firmar nada. <strong>No des nada por sentado.</strong>
+          </p>
+
+          <blockquote class="point-pull">
+            El código urbano no es burocracia:<br>
+            <em>es la forma en que tu casa convive con la cuadra.</em>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">05 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 6 — POINT 04
+         ===================================================== -->
+    <section class="page point bone2">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 04</div>
+        <div class="center"></div>
+        <div class="right">Factibilidad de servicios</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>04</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 04</span>
+        </div>
+
+        <h2 class="point-title">Pedir factibilidad de servicios <em>(agua, cloaca, gas, electricidad)</em></h2>
+
+        <div class="point-body">
+          <p>
+            Antes de comprar un terreno o de diseñar una casa,
+            <strong>tramitá los certificados de factibilidad</strong> ante
+            las prestadoras de servicios públicos. Esto confirma que la red
+            puede abastecer la nueva construcción.
+          </p>
+          <p>
+            En muchos lugares, si la red no llega o la conexión es muy
+            costosa (porque hay que hacer tendido eléctrico o traer gas
+            desde varias cuadras), el proyecto se vuelve inviable.
+          </p>
+          <p>
+            <strong>Este trámite puede demorar semanas o meses</strong>, así
+            que iniciarlo temprano ahorra disgustos.
+          </p>
+
+          <div class="point-data">
+            <div class="cell"><span class="k">Agua &amp; cloaca</span><span class="v">AySA (AMBA) o cooperativa local.</span></div>
+            <div class="cell"><span class="k">Gas natural</span><span class="v">Metrogás o distribuidora zonal.</span></div>
+            <div class="cell"><span class="k">Electricidad</span><span class="v">Edenor, Edesur o cooperativa local.</span></div>
+            <div class="cell"><span class="k">Plazo típico</span><span class="v">Entre 4 y 12 semanas hábiles.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">06 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 7 — POINT 05
+         ===================================================== -->
+    <section class="page point">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 05</div>
+        <div class="center"></div>
+        <div class="right">Presupuesto realista</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>05</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 05</span>
+        </div>
+
+        <h2 class="point-title">Saber el presupuesto realista <em>con números actualizados</em></h2>
+
+        <div class="point-body">
+          <p>
+            No alcanza con "tengo unos pesos ahorrados". El costo de
+            construcción varía por zona, calidad de materiales y tipo de
+            mano de obra.
+          </p>
+          <p>
+            En junio de 2025, en CABA el costo promedio del metro cuadrado
+            construido rondaba los <strong>$1.200.000</strong> para vivienda
+            de calidad media. Para una casa de 120 m², eso implica un
+            presupuesto de entre <strong>134 y 172 millones de pesos</strong>
+            solo en obra, sin incluir terreno ni honorarios. En 2026,
+            referencias de estudios especializados indican valores de entre
+            <strong>700 y 950 dólares por m²</strong> para calidad media.
+          </p>
+          <p>
+            Pedí cotizaciones actualizadas a al menos tres constructoras o
+            arquitectos y comprobá los precios de materiales básicos
+            (cemento, ladrillos, arena, hierro) en tu zona. <strong>Nunca
+            te quedes con un solo presupuesto.</strong>
+          </p>
+
+          <div class="point-data">
+            <div class="cell"><span class="k">CABA · 2025</span><span class="v">~ $1.200.000 / m² · calidad media</span></div>
+            <div class="cell"><span class="k">Casa 120 m²</span><span class="v">~ $134 a 172 millones (obra)</span></div>
+            <div class="cell"><span class="k">USD · 2026</span><span class="v">700–950 USD / m² · calidad media</span></div>
+            <div class="cell"><span class="k">Cotizaciones</span><span class="v">Pedí mínimo 3, comparalas en detalle.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">07 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 8 — POINT 06
+         ===================================================== -->
+    <section class="page point bone2">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 06</div>
+        <div class="center"></div>
+        <div class="right">Honorarios profesionales</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>06</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 06</span>
+        </div>
+
+        <h2 class="point-title">Considerar los honorarios profesionales <em>como parte del costo</em></h2>
+
+        <div class="point-body">
+          <p>
+            Los arquitectos, ingenieros y otros profesionales no trabajan
+            gratis. Sus honorarios suelen calcularse como un
+            <strong>porcentaje del costo total de la obra</strong>
+            (habitualmente entre el 8% y el 15%) o por hora de trabajo.
+          </p>
+          <p>
+            Aunque desde los años 90 los aranceles dejaron de ser de orden
+            público y se negocia libremente, los <strong>colegios
+            profesionales publican valores referenciales</strong> para
+            orientar. Por ejemplo, el Consejo Profesional de Arquitectura
+            y Urbanismo de la provincia de Buenos Aires (CAPBA) mantiene
+            una escala arancelaria vigente para su jurisdicción.
+          </p>
+          <p>
+            <strong>Pedí siempre una propuesta desglosada</strong>:
+            proyecto, dirección de obra, cómputos métricos, etc. Un
+            profesional barato puede costar muy caro en errores.
+          </p>
+
+          <div class="point-data">
+            <div class="cell"><span class="k">Rango habitual</span><span class="v">8% a 15% del costo de obra.</span></div>
+            <div class="cell"><span class="k">Referencias</span><span class="v">CAPBA · CANQN · MiArq (Rosario).</span></div>
+            <div class="cell"><span class="k">Modalidad</span><span class="v">Porcentaje, hora o tarea desglosada.</span></div>
+            <div class="cell"><span class="k">Recomendado</span><span class="v">Propuesta escrita, ítem por ítem.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">08 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 9 — POINT 07
+         ===================================================== -->
+    <section class="page point">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 07</div>
+        <div class="center"></div>
+        <div class="right">Plazos de obra</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>07</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 07</span>
+        </div>
+
+        <h2 class="point-title">Prever el plazo total de obra <em>(multiplicá lo que te digan)</em></h2>
+
+        <div class="point-body">
+          <p>
+            La construcción real nunca dura lo que promete el inicio. Una
+            vivienda unifamiliar estándar lleva entre <strong>8 y 14 meses</strong>
+            de obra, pero ese plazo puede extenderse por factores como
+            clima, disponibilidad de materiales, modificaciones en marcha
+            o retrasos en gremios.
+          </p>
+          <p>
+            <strong>Añadí un 30% de margen al plazo que te den.</strong>
+            Y pactá por escrito fechas de entrega parciales con
+            penalizaciones por demora. El certificado final de obra también
+            demanda tiempo de gestión municipal.
+          </p>
+
+          <div class="point-data">
+            <div class="cell"><span class="k">Cimentación</span><span class="v">~ 1 mes</span></div>
+            <div class="cell"><span class="k">Estructura</span><span class="v">2 a 3 meses</span></div>
+            <div class="cell"><span class="k">Albañilería</span><span class="v">~ 2 meses</span></div>
+            <div class="cell"><span class="k">Instalaciones</span><span class="v">~ 1 mes</span></div>
+            <div class="cell"><span class="k">Terminaciones</span><span class="v">2 a 3 meses</span></div>
+            <div class="cell"><span class="k">Total típico</span><span class="v">8 a 14 meses (+30% margen)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">09 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 10 — POINT 08
+         ===================================================== -->
+    <section class="page point bone2">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 08</div>
+        <div class="center"></div>
+        <div class="right">Margen de contingencia</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>08</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 08</span>
+        </div>
+
+        <h2 class="point-title">Reservar un margen de contingencia <em>(10–20% del presupuesto)</em></h2>
+
+        <div class="point-body">
+          <p>
+            Por más detallado que sea el presupuesto, siempre aparecen
+            imprevistos: <strong>sobrecostos en cimentación por un suelo
+            peor al estimado, aumento de precios de materiales, roturas
+            durante la obra, trabajos adicionales no previstos</strong>
+            (mejoras en aislaciones, cambios en aberturas, etc.).
+          </p>
+          <p>
+            En Argentina, por la inflación y la volatilidad del tipo de
+            cambio, reservar entre <strong>el 10% y el 20% del presupuesto
+            total</strong> como fondo de contingencia es una buena práctica.
+            Ese dinero no se toca excepto para emergencias.
+          </p>
+          <p>
+            Si no lo usás, lo recuperás al final, pero si no lo tenés y
+            surge un problema, la obra se para. En proyectos estatales
+            esa reserva se llama <strong>AIU</strong> (Administración,
+            Imprevistos, Utilidad) y se incluye explícitamente en el
+            cómputo.
+          </p>
+
+          <blockquote class="point-pull">
+            La contingencia no es plata "de más":<br>
+            <em>es la plata que evita que la obra se pare.</em>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">10 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 11 — POINT 09
+         ===================================================== -->
+    <section class="page point">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 09</div>
+        <div class="center"></div>
+        <div class="right">Constructor</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>09</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 09</span>
+        </div>
+
+        <h2 class="point-title">Elegir bien al constructor <em>(y verificar referencias de verdad)</em></h2>
+
+        <div class="point-body">
+          <p>
+            No te cases con el primero que aparece. Pedí <strong>mínimo
+            tres presupuestos detallados</strong> de constructoras o
+            contratistas con matrícula habilitante (en muchos municipios
+            es obligatorio que el director de obra sea un profesional
+            matriculado).
+          </p>
+          <p>
+            Verificá <strong>trabajos anteriores</strong>; si podés,
+            hablá con clientes previos (y andá a ver las obras
+            terminadas). Fijate si el constructor tiene <strong>seguro
+            de obra, ART para sus empleados y experiencia en obras
+            similares</strong> a la tuya.
+          </p>
+          <p>
+            <strong>La diferencia entre un buen constructor y un
+            improvisado es la diferencia entre una casa que dura décadas
+            y un dolor de cabeza eterno.</strong>
+          </p>
+
+          <div class="point-data">
+            <div class="cell"><span class="k">Presupuestos</span><span class="v">Mínimo 3, detallados por rubro.</span></div>
+            <div class="cell"><span class="k">Habilitación</span><span class="v">Matrícula profesional vigente.</span></div>
+            <div class="cell"><span class="k">Seguros</span><span class="v">ART activa · seguro de obra.</span></div>
+            <div class="cell"><span class="k">Referencias</span><span class="v">Hablá con clientes previos. Visitá obras.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">11 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 12 — POINT 10
+         ===================================================== -->
+    <section class="page point bone2">
+      <div class="pg-header">
+        <div class="left">Guía · Capítulo 10</div>
+        <div class="center"></div>
+        <div class="right">Documentación escrita</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="point-num-row">
+          <span class="point-num"><b>10</b> · DE 10</span>
+          <span class="point-rule"></span>
+          <span class="point-tag">Punto 10</span>
+        </div>
+
+        <h2 class="point-title">Documentar todo por escrito <em>(planos, contratos, certificados)</em></h2>
+
+        <div class="point-body">
+          <p>
+            El dicho "lo que no está escrito, no existe" es la regla de
+            oro de la construcción. Todo debe estar por escrito.
+          </p>
+          <p>
+            <strong>El contrato de obra</strong> con el constructor
+            (preferentemente con modelos avalados por consejos profesionales,
+            que incluyen pliego de condiciones y planilla de mediciones
+            detalladas). <strong>El contrato de servicios profesionales</strong>
+            con el arquitecto, especificando alcance, honorarios, plazos y
+            forma de pago.
+          </p>
+          <p>
+            <strong>Las memorias descriptivas y planos</strong> de proyecto,
+            estructura e instalaciones. <strong>Los certificados de
+            materiales</strong> (hierro, cemento, etc.) y <strong>las
+            planillas de avance de obra</strong> certificadas por el
+            profesional director. Guardá cada recibo, factura y comprobante
+            de pago. Si después surge una diferencia, la documentación es
+            tu única prueba.
+          </p>
+
+          <div class="point-data">
+            <div class="cell"><span class="k">Contratos</span><span class="v">Obra + servicios profesionales.</span></div>
+            <div class="cell"><span class="k">Planos</span><span class="v">Arq · estructura · instalaciones · municipal.</span></div>
+            <div class="cell"><span class="k">Memorias</span><span class="v">Descriptiva, técnica y de cálculo.</span></div>
+            <div class="cell"><span class="k">Comprobantes</span><span class="v">Recibos, facturas, planillas de avance.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">12 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 13 — RESOURCES
+         ===================================================== -->
+    <section class="page resources">
+      <div class="pg-header">
+        <div class="left">Guía · Anexo</div>
+        <div class="center"></div>
+        <div class="right">Recursos útiles</div>
+      </div>
+
+      <div class="pg-body">
+        <div class="res-head">
+          <div class="left">
+            <span class="eyebrow">— ANEXO 01</span>
+            <span class="num">A · DE B</span>
+          </div>
+          <div class="right">
+            <h2 class="title">Recursos útiles <em>para profundizar</em></h2>
+            <p class="sub">
+              Sitios oficiales, colegios profesionales y contenidos
+              recomendados para chequear datos, costos y normativa por
+              jurisdicción.
+            </p>
+          </div>
+        </div>
+
+        <div class="res-groups">
+
+          <div class="res-group">
+            <h4>Sitios oficiales &amp; colegios profesionales</h4>
+            <ul class="res-list">
+              <li>
+                <span class="ix">01</span>
+                <span>
+                  <a class="name" href="https://www.capba.org.ar" target="_blank" rel="noopener">Colegio de Arquitectos de la Provincia de Buenos Aires · CAPBA <span class="arr">↗</span></a>
+                  <span class="desc">Publica valores referenciales de honorarios y escalas arancelarias vigentes.</span>
+                  <span class="url">capba.org.ar</span>
+                </span>
+              </li>
+              <li>
+                <span class="ix">02</span>
+                <span>
+                  <a class="name" href="https://www.capsf.org.ar/d2/" target="_blank" rel="noopener">Colegio de Arquitectos · Santa Fe Distrito 2 (Rosario) <span class="arr">↗</span></a>
+                  <span class="desc">Portal MiArq con calculadora de honorarios sugeridos y herramientas para matriculados.</span>
+                  <span class="url">capsf.org.ar/d2</span>
+                </span>
+              </li>
+              <li>
+                <span class="ix">03</span>
+                <span>
+                  <a class="name" href="https://www.cann.org.ar" target="_blank" rel="noopener">Colegio de Arquitectos de Neuquén · CANQN <span class="arr">↗</span></a>
+                  <span class="desc">Planillas con honorarios sugeridos desglosados por tarea: arquitectura, estructuras, instalaciones.</span>
+                  <span class="url">cann.org.ar</span>
+                </span>
+              </li>
+              <li>
+                <span class="ix">04</span>
+                <span>
+                  <a class="name" href="https://buenosaires.gob.ar/desarrollourbano/codigourbanistico" target="_blank" rel="noopener">Gobierno de la Ciudad de Buenos Aires · Código Urbanístico <span class="arr">↗</span></a>
+                  <span class="desc">Código Urbanístico vigente (Ley N° 6099/18) y Código de Edificación. Consultá antes de proyectar.</span>
+                  <span class="url">buenosaires.gob.ar/desarrollourbano/codigourbanistico</span>
+                </span>
+              </li>
+              <li>
+                <span class="ix">05</span>
+                <span>
+                  <a class="name" href="https://www.copime.org.ar" target="_blank" rel="noopener">Consejo Profesional de Ingeniería · COPIME <span class="arr">↗</span></a>
+                  <span class="desc">Regula la matrícula de ingenieros. Publica recomendaciones sobre prácticas seguras en obra.</span>
+                  <span class="url">copime.org.ar</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pg-footer">
+        <div class="left">Nobra · Guía 01</div>
+        <div class="center">NOBRA</div>
+        <div class="right">13 / 14</div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         PAGE 14 — CLOSING (inverted)
+         ===================================================== -->
+    <section class="page closing inv">
+      <div class="pg-header inv">
+        <div class="left">Guía · Cierre</div>
+        <div class="center"></div>
+        <div class="right">Consejo final</div>
+      </div>
+
+      <div class="pg-body">
+
+        <div class="closing-top">
+          <span class="eyebrow"><span class="rule"></span>— Consejo final</span>
+          <span></span>
+        </div>
+
+        <div class="closing-center">
+          <h2 class="closing-title">
+            Construir una casa <em>es una apuesta al futuro.</em><br>
+            No te apures.
+          </h2>
+          <p class="closing-body">
+            Cada uno de estos diez puntos es una conversación incómoda que
+            es mejor tener antes de que empiecen los problemas. Un buen
+            profesional te va a acompañar y responder todas tus dudas.
+          </p>
+          <blockquote class="closing-pull">
+            Tu peor enemigo no es la obra,<br>
+            <em>es lo que no planificaste.</em>
+          </blockquote>
+        </div>
+
+        <div class="closing-bottom">
+          <div class="left">
+            <span class="k">¿Querés conversarlo?</span>
+            <span class="v">hola@nobra.ar</span>
+            <span class="sub">La Plata, Buenos Aires · Argentina</span>
+          </div>
+          <div class="right">
+            <img src="assets/logo-marca-negativo.svg" alt="Nobra">
+            <span class="wm">NOBRA</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pg-footer inv">
+        <div class="left">Nobra · Novoa &amp; Bravin Arquitectos</div>
+        <div class="center">NOBRA</div>
+        <div class="right">14 / 14</div>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

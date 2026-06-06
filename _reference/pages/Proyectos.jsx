@@ -1,5 +1,7 @@
-// Proyectos — 5 proyectos conceptuales con galería de drawings (planos/cortes/axos/detalles)
-const { useState: useStatePr } = React;
+// Proyectos — galería con imágenes reales (planta + corte + renders) por proyecto.
+// Cada imagen es un <image-slot> rellenable (arrastrar/soltar, persistente) y el
+// click en la lupa abre el visor a tamaño original; los renders se navegan.
+const { useState: useStatePr, useEffect: useEffectPr } = React;
 
 const PROYECTOS = [
   {
@@ -11,18 +13,23 @@ const PROYECTOS = [
     type: 'residencial',
     year: '2026',
     stage: 'Anteproyecto',
-    area: '180 m²',
-    plot: '300 m²',
-    program: 'Vivienda + estudio',
+    area: '240 m²',
+    plot: '600 m²',
+    program: '3 dormitorios + multiuso',
     desc:
-      'Casa entre medianeras pensada para un lote típico de La Plata. ' +
-      'Patio central que organiza la planta y separa el área pública del descanso. ' +
-      'Materialidad simple: ladrillo a la vista, hormigón y carpintería negra.',
-    drawings: [
-      { kind: 'plan',    v: 1, tag: 'Planta baja · 1:100' },
-      { kind: 'section', v: 1, tag: 'Corte longitudinal' },
-      { kind: 'detail',  v: 4, tag: 'Modulación fachada' },
-    ],
+      'Vivienda de una planta con un volumen multiuso en planta alta. ' +
+      'Galería con parrilla integrada al estar–comedor, suite principal con vestidor y cochera doble cubierta. ' +
+      'Volúmenes blancos y gris grafito, carpintería de aluminio negro.',
+    renderCount: 3,
+    images: {
+      planta: 'assets/proyectos/lp01-planta.png',
+      corte: 'assets/proyectos/lp01-corte.png',
+      renders: [
+        'assets/proyectos/lp01-render-01.jpeg',
+        'assets/proyectos/lp01-render-02.jpeg',
+        'assets/proyectos/lp01-render-03.png',
+      ],
+    },
   },
   {
     id: 'cb02',
@@ -40,11 +47,7 @@ const PROYECTOS = [
       'Edificio bajo de 4 plantas con doce unidades de 1 y 2 ambientes. ' +
       'Patio común en planta baja, terraza verde de uso compartido. ' +
       'Estrategia bioclimática: orientación norte, parasoles de aluminio.',
-    drawings: [
-      { kind: 'plan',    v: 3, tag: 'Planta tipo · 1:200' },
-      { kind: 'axon',    v: 2, tag: 'Axonometría' },
-      { kind: 'section', v: 3, tag: 'Elevación frente' },
-    ],
+    renderCount: 2,
   },
   {
     id: 'sr03',
@@ -62,11 +65,7 @@ const PROYECTOS = [
       'Estudio conceptual para una casa mínima en sierra. ' +
       'Volumen único con cubierta a dos aguas, ventanal vidriado al valle. ' +
       'Construcción seca, en madera laminada y chapa.',
-    drawings: [
-      { kind: 'section', v: 4, tag: 'Corte transversal' },
-      { kind: 'plan',    v: 4, tag: 'Planta única' },
-      { kind: 'axon',    v: 4, tag: 'Volumetría' },
-    ],
+    renderCount: 3,
   },
   {
     id: 'lc04',
@@ -84,11 +83,7 @@ const PROYECTOS = [
       'Reforma integral de un local sobre calle 12. ' +
       'Mostrador continuo en hormigón pulido, iluminación lineal, paleta hueso. ' +
       'Diseño replicable para una posible expansión a otras sucursales.',
-    drawings: [
-      { kind: 'plan',    v: 4, tag: 'Planta · 1:50' },
-      { kind: 'detail',  v: 1, tag: 'Detalle mobiliario' },
-      { kind: 'detail',  v: 2, tag: 'Detalle luminaria' },
-    ],
+    renderCount: 1,
   },
   {
     id: 'cp05',
@@ -106,11 +101,7 @@ const PROYECTOS = [
       'Casa en L con patio principal entre el área social y los dormitorios. ' +
       'Galería continua que protege del sol del oeste. ' +
       'Hormigón visto, carpintería de aluminio negro, piso de cemento alisado.',
-    drawings: [
-      { kind: 'plan',    v: 2, tag: 'Planta general · 1:100' },
-      { kind: 'axon',    v: 3, tag: 'Axonometría' },
-      { kind: 'section', v: 2, tag: 'Corte vivienda' },
-    ],
+    renderCount: 2,
   },
 ];
 
@@ -121,28 +112,94 @@ const FILTERS = [
   { id: 'comercial',       label: 'Comercial' },
 ];
 
-function drawingFor(d) {
-  if (d.kind === 'plan')    return <DrawPlan variant={d.v} />;
-  if (d.kind === 'section') return <DrawSection variant={d.v} />;
-  if (d.kind === 'axon')    return <DrawAxon variant={d.v} />;
-  return <DrawDetail variant={d.v} />;
+// Icons — Lucide line geometry, currentColor, 1.5px stroke
+const IconExpand = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <polyline points="15 3 21 3 21 9"></polyline>
+    <polyline points="9 21 3 21 3 15"></polyline>
+    <line x1="21" y1="3" x2="14" y2="10"></line>
+    <line x1="3" y1="21" x2="10" y2="14"></line>
+  </svg>
+);
+const IconClose = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </svg>
+);
+const IconChevL = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+);
+const IconChevR = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+);
+
+// Read the currently displayed image for a slot id — prefers the live
+// shadow-DOM <img> (covers a user drop) and falls back to the author src.
+function slotImageSrc(id) {
+  const el = document.getElementById(id);
+  if (!el) return null;
+  const sd = el.shadowRoot;
+  if (sd) {
+    const img = sd.querySelector('.frame img');
+    if (img && img.style.display !== 'none' && img.getAttribute('src')) return img.src;
+  }
+  return el.getAttribute('src') || null;
 }
 
-function ProjectCard({ p, idx, numberingStyle }) {
+function GalleryTile({ tile, group, className, placeholder, onExpand }) {
+  return (
+    <div className={`nb-slot ${className || ''}`}>
+      {React.createElement('image-slot', {
+        id: tile.id,
+        src: tile.src || undefined,
+        placeholder: placeholder || `Soltá ${tile.label.toLowerCase()}`,
+        fit: 'cover',
+        style: { position: 'absolute', inset: 0, width: '100%', height: '100%' },
+      })}
+      <span className="nb-slot-tag">{tile.label}</span>
+      <button className="nb-slot-expand"
+              onClick={() => onExpand(group, tile.id)}
+              aria-label={`Ver ${tile.label} en tamaño original`}>
+        <IconExpand />
+      </button>
+    </div>
+  );
+}
+
+function ProjectCard({ p, idx, total, numberingStyle, onExpand }) {
   const num = numberingStyle === 'pad'
     ? String(idx + 1).padStart(3, '0')
     : numberingStyle === 'p'
       ? p.num
-      : `${String(idx + 1).padStart(2,'0')} / ${String(PROYECTOS.length).padStart(2,'0')}`;
+      : `${String(idx + 1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+
+  const mk = (id, label, src) => ({ id, label, src, caption: `${p.title} · ${label}` });
+  const plantaTile = mk(`${p.id}-planta`, 'Planta', p.images && p.images.planta);
+  const corteTile  = mk(`${p.id}-corte`,  'Corte',  p.images && p.images.corte);
+  const renderTiles = Array.from({ length: p.renderCount }, (_, i) =>
+    mk(`${p.id}-render-${i + 1}`, `Render ${String(i + 1).padStart(2, '0')}`,
+       p.images && p.images.renders && p.images.renders[i]));
+
+  const featureRender = renderTiles[0];
+  const extraRenders = renderTiles.slice(1);
+
   return (
     <article className="nb-project-card">
       <div className="nb-project-gallery">
-        {p.drawings.slice(0, 3).map((d, i) => (
-          <div key={i} className="nb-project-thumb" style={{color: 'var(--nobra-blue)'}}>
-            {drawingFor(d)}
-            <span className="nb-project-thumb-tag">{d.tag}</span>
+        <GalleryTile tile={featureRender} group={renderTiles} className="nb-gal-primary"
+                     placeholder="Soltá el render principal" onExpand={onExpand} />
+        <div className="nb-gal-tech">
+          <GalleryTile tile={plantaTile} group={[plantaTile]} onExpand={onExpand} />
+          <GalleryTile tile={corteTile}  group={[corteTile]}  onExpand={onExpand} />
+        </div>
+        {extraRenders.length > 0 && (
+          <div className="nb-gal-renders">
+            {extraRenders.map(t => (
+              <GalleryTile key={t.id} tile={t} group={renderTiles} onExpand={onExpand} />
+            ))}
           </div>
-        ))}
+        )}
       </div>
 
       <div className="nb-project-info">
@@ -177,9 +234,81 @@ function ProjectCard({ p, idx, numberingStyle }) {
   );
 }
 
+function ProjectLightbox({ data, setData }) {
+  useEffectPr(() => {
+    if (!data) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setData(null);
+      else if (e.key === 'ArrowLeft')  setData(d => d && { ...d, index: (d.index - 1 + d.items.length) % d.items.length });
+      else if (e.key === 'ArrowRight') setData(d => d && { ...d, index: (d.index + 1) % d.items.length });
+    };
+    window.addEventListener('keydown', onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [data]);
+
+  if (!data) return null;
+  const { items, index } = data;
+  const cur = items[index];
+  const multi = items.length > 1;
+  const go = (delta, e) => {
+    if (e) e.stopPropagation();
+    setData(d => d && { ...d, index: (d.index + delta + d.items.length) % d.items.length });
+  };
+
+  return (
+    <div className="nb-lightbox" onClick={() => setData(null)}>
+      <div className="nb-lightbox-bar" onClick={(e) => e.stopPropagation()}>
+        <span className="nb-lightbox-cap">{cur.caption}</span>
+        <div className="nb-lightbox-bar-right">
+          {multi && (
+            <span className="nb-lightbox-count">
+              {String(index + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}
+            </span>
+          )}
+          <button className="nb-lightbox-close" onClick={() => setData(null)} aria-label="Cerrar">
+            <IconClose />
+          </button>
+        </div>
+      </div>
+
+      <div className="nb-lightbox-stage" onClick={() => setData(null)}>
+        {multi && (
+          <button className="nb-lightbox-nav" onClick={(e) => go(-1, e)} aria-label="Anterior">
+            <IconChevL />
+          </button>
+        )}
+        <div className="nb-lightbox-figure" onClick={(e) => e.stopPropagation()}>
+          <img className="nb-lightbox-img" src={cur.src} alt={cur.caption} />
+        </div>
+        {multi && (
+          <button className="nb-lightbox-nav" onClick={(e) => go(1, e)} aria-label="Siguiente">
+            <IconChevR />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function Proyectos({ tweaks, onNav }) {
   const [filter, setFilter] = useStatePr('todos');
+  const [lightbox, setLightbox] = useStatePr(null);
   const visible = filter === 'todos' ? PROYECTOS : PROYECTOS.filter(p => p.type === filter);
+
+  const onExpand = (group, clickedId) => {
+    const filled = group
+      .map(t => ({ ...t, src: slotImageSrc(t.id) }))
+      .filter(t => t.src);
+    if (!filled.length) return;
+    let i = filled.findIndex(t => t.id === clickedId);
+    if (i < 0) i = 0;
+    setLightbox({ items: filled, index: i });
+  };
 
   return (
     <div className="nb-page" data-screen-label="03 Proyectos">
@@ -230,11 +359,13 @@ function Proyectos({ tweaks, onNav }) {
       </div>
 
       <div className="nb-projects-list">
-        {visible.map((p, i) => (
+        {visible.map((p) => (
           <ProjectCard key={p.id}
                        p={p}
                        idx={PROYECTOS.indexOf(p)}
-                       numberingStyle={tweaks?.projectNumbering || 'slash'} />
+                       total={PROYECTOS.length}
+                       numberingStyle={tweaks?.projectNumbering || 'slash'}
+                       onExpand={onExpand} />
         ))}
         {visible.length === 0 && (
           <div style={{padding: 80, textAlign: 'center', color: 'var(--stone-500)'}}>
@@ -262,6 +393,8 @@ function Proyectos({ tweaks, onNav }) {
           Empecemos tu proyecto
         </button>
       </section>
+
+      <ProjectLightbox data={lightbox} setData={setLightbox} />
     </div>
   );
 }
