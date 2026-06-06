@@ -39,9 +39,16 @@ const PROYECTOS: Project[] = [
   {
     id: 'sr03', num: 'P—03', title: 'Vivienda H.A.S_04', place: 'Concepto',
     kind: 'Vivienda', type: 'residencial', year: '2025', stage: 'Proyecto',
-    area: '270 m²', plot: '620 m²', program: 'Vivienda', renderCount: 3,
+    area: '270 m²', plot: '620 m²', program: 'Vivienda', renderCount: 1,
     desc: 'El proyecto se desarrolla a partir de la intersección de prismas de distintas alturas y profundidades, generando una fachada con movimiento y jerarquía visual. La composición evita la simetría tradicional y busca una imagen actual, elegante y de fuerte presencia urbana.',
     desc2: 'Se trata de una vivienda unifamiliar de imagen moderna y sofisticada, donde la combinación de piedra, revoques claros, vidrio y madera genera una composición equilibrada entre robustez y ligereza. El diseño logra una identidad arquitectónica fuerte, una adecuada relación con el exterior y una estética contemporánea que mantiene vigencia a lo largo del tiempo.',
+    images: {
+      planta: '/assets/proyectos/sr03-planta.jpeg',
+      corte: '/assets/proyectos/sr03-corte.jpeg',
+      renders: [
+        '/assets/proyectos/sr03-render-01.jpeg',
+      ],
+    },
   },
   {
     id: 'lc04', num: 'P—04', title: 'Local C—12', place: 'La Plata, BA',
@@ -56,6 +63,14 @@ const PROYECTOS: Project[] = [
     area: '300 m²', plot: '1700 m²', program: 'Vivienda de fin de Semana', renderCount: 2,
     desc: 'Esta vivienda de fin de semana se concibe como un refugio para el descanso y la vida familiar, donde la arquitectura prioriza la relación con el entorno natural. La combinación de ladrillo, piedra, madera y grandes superficies vidriadas produce una imagen cálida, elegante y atemporal, mientras que la galería, el jardín y la piscina se convierten en los verdaderos protagonistas de la experiencia espacial.',
     desc2: '',
+    images: {
+      planta: '/assets/proyectos/cp05-planta.jpeg',
+      corte: '/assets/proyectos/cp05-corte.jpeg',
+      renders: [
+        '/assets/proyectos/cp05-render-01.jpeg',
+        '/assets/proyectos/cp05-render-02.jpeg',
+      ],
+    },    
   },
 ]
 
