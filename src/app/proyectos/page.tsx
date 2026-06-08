@@ -60,10 +60,10 @@ const PROYECTOS: Project[] = [
     },
   },
   {
-    id: 'lc04', num: 'P—04', title: 'COCINA BARIO M.E_02', place: 'CABA',
+    id: 'lc04', num: 'P—04', title: 'COCINA BARRIO M.E_02', place: 'CABA',
     kind: 'Interiorismo', type: 'interiorismo', year: '2026', stage: 'Construido',
-    area: '8 m²', plot: '—', program: 'Cocina completa', renderCount: 1,
-    desc: 'Reforma integral de un local sobre calle 12. Mostrador continuo en hormigón pulido, iluminación lineal, paleta hueso. Diseño replicable para una posible expansión a otras sucursales.',
+    area: '8 m²', plot: '—', program: 'Reforma cocina', renderCount: 1,
+    desc: 'El diseño responde a una lógica de cocina integrada, donde las áreas de preparación, cocción y lavado se alinean sobre un frente principal. La isla funciona como elemento articulador: aporta superficie de trabajo adicional, delimita visualmente el ambiente y permite un uso social del espacio sin interrumpir las tareas culinarias.',
     desc2: '',
     images: {
       planta: '/assets/proyectos/lc04-planta.webp',
@@ -77,7 +77,7 @@ const PROYECTOS: Project[] = [
     id: 'cp05', num: 'P—05', title: 'Casa fin de Semana FA_05', place: 'Gran Buenos Aires, BA',
     kind: 'Vivienda unifamiliar', type: 'residencial', year: '2026', stage: 'Proyecto',
     area: '300 m²', plot: '1700 m²', program: 'Vivienda de fin de Semana', renderCount: 2,
-    desc: 'El diseño responde a una lógica de cocina integrada, donde las áreas de preparación, cocción y lavado se alinean sobre un frente principal. La isla funciona como elemento articulador: aporta superficie de trabajo adicional, delimita visualmente el ambiente y permite un uso social del espacio sin interrumpir las tareas culinarias.',
+    desc: 'Esta vivienda de fin de semana se concibe como un refugio para el descanso y la vida familiar, donde la arquitectura prioriza la relación con el entorno natural. La combinación de ladrillo, piedra, madera y grandes superficies vidriadas genera una imagen cálida, elegante y atemporal, mientras que la galería, el jardín y la piscina se convierten en los verdaderos protagonistas de la experiencia espacial',
     desc2: '',
     images: {
       planta: '/assets/proyectos/cp05-planta.webp',
