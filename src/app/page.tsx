@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { DrawPlan, DrawSection, DrawAxon } from '@/components/Drawings'
+import RenderCarousel from '@/components/RenderCarousel'
 
 const PILLARS = [
   {
@@ -65,10 +66,8 @@ export default function HomePage() {
           <div className="nb-meta-row"><span className="nb-meta-k">Servicio</span><span className="nb-meta-v">Proyecto + Obra</span></div>
         </aside>
 
-        <div className="nb-hero-image" aria-hidden="true">
-          <div className="nb-placeholder">
-            <span className="nb-placeholder-tag">Render del estudio · próximamente</span>
-          </div>
+        <div className="nb-hero-image">
+          <RenderCarousel />
         </div>
       </section>
 
