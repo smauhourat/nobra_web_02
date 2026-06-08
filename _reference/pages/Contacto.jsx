@@ -115,8 +115,8 @@ function Contacto({ onNav, leadMagnetOpen, onLeadMagnetClose }) {
             </p>
 
             <div className="nb-contact-info">
-              <div><span>Estudio</span><b>CABA, Buenos Aires</b></div>
-              <div><span>Email</span><b>estudio@nobra.com.ar</b></div>
+              <div><span>Estudio</span><b>La Plata, Buenos Aires</b></div>
+              <div><span>Email</span><b>estudio@nobra.ar</b></div>
               <div><span>Teléfono</span><b>+54 221 000 0000</b></div>
               <div><span>Horario</span><b>Lun a Vie · 9 a 18 hs</b></div>
               <div><span>Matrícula</span><b>CAPBA · D-V</b></div>

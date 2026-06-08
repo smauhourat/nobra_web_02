@@ -9,7 +9,7 @@ function Footer({ onNav }) {
           <div className="nb-footer-wm">NOBRA</div>
           <p className="nb-footer-tag">Novoa &amp; Bravin Arquitectos</p>
           <p className="nb-footer-tag" style={{maxWidth: '36ch', marginTop: 12, opacity: 0.7}}>
-            Diseño integral, dirección y ejecución de obras en CABA y zona.
+            Diseño integral, dirección y ejecución de obras en La Plata y zona.
           </p>
         </div>
 
@@ -36,7 +36,7 @@ function Footer({ onNav }) {
           <div>
             <span className="nb-eyebrow">Contacto</span>
             <ul>
-              <li>CABA, Buenos Aires</li>
+              <li>La Plata, Buenos Aires</li>
               <li>estudio@nobra.ar</li>
               <li>+54 221 000 0000</li>
               <li style={{marginTop: 10}}>Lun a Vie · 9 a 18 hs</li>
