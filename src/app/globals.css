@@ -698,7 +698,8 @@ hr { border: 0; border-top: var(--bw-1) solid var(--line); margin: var(--s-6) 0;
 .nb-founders-head { max-width: 720px; margin-bottom: clamp(48px, 6vw, 80px); }
 .nb-founders-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(32px, 5vw, 64px); }
 .nb-founder { display: grid; grid-template-columns: 200px 1fr; gap: 28px; align-items: start; }
-.nb-founder-portrait { aspect-ratio: 4 / 5; background: var(--bone); border: 1px solid var(--line); display: grid; place-items: center; position: relative; overflow: hidden; }
+/* .nb-founder-portrait { aspect-ratio: 4 / 5; background: var(--bone); border: 1px solid var(--line); display: grid; place-items: center; position: relative; overflow: hidden; } */
+.nb-founder-portrait { aspect-ratio: 4 / 5; display: grid; place-items: center; position: relative; overflow: hidden; }
 .nb-founder-portrait svg { width: 70%; height: 80%; }
 .nb-founder-portrait-tag { position: absolute; bottom: 8px; left: 8px; font: 500 9px/1 var(--font-sans); letter-spacing: 0.18em; text-transform: uppercase; background: var(--bone); color: var(--stone-500); border: 1px solid var(--line); padding: 5px 8px; }
 .nb-founder-name { font-family: var(--font-display); font-weight: 300; font-size: 26px; letter-spacing: -0.01em; line-height: 1.1; color: var(--nobra-blue); margin: 0 0 4px; }
