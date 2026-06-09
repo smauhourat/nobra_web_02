@@ -6,6 +6,7 @@ const FOUNDERS = [
   {
     n: 'Novoa', full: 'Arq. Ailén Novoa', role: 'Socia · Diseño e interiorismo',
     bio: 'Seis años de experiencia en estudios de arquitectura integrales, trabajó como project leader en obras residenciales unifamiliares y multifamiliares, comercios y oficinas.',
+    bioPad: true,
     meta: [['Matrícula', 'CPAU · N° 34738'], ['Especialidad', 'Vivienda · Interiorismo'], ['Software', 'Revit · Enscape']] as [string, string][],
     v: 1,
     img: '/ailen-novoa.webp',
@@ -119,7 +120,7 @@ export default function EstudioPage() {
               <div>
                 <h3 className="nb-founder-name">{f.full}</h3>
                 <div className="nb-founder-role">{f.role}</div>
-                <p className="nb-founder-bio">{f.bio}</p>
+                <p className="nb-founder-bio">{f.bio}{f.bioPad && <><br /><br /></>}</p>
                 <div className="nb-founder-meta">
                   {f.meta.map(([k, v]) => (
                     <div key={k} className="nb-founder-meta-row">
