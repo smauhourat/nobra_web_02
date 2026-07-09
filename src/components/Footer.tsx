@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="nb-footer">
       <div className="nb-footer-top">
         <div className="nb-footer-brand">
-          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/logo-blanco.svg`} alt="" className="nb-footer-mark" />
+          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/logo-negro-5-2.svg`} alt="" className="nb-footer-mark" />
           <div className="nb-footer-wm">NOBRA</div>
           <p className="nb-footer-tag">Novoa &amp; Bravin Arquitectos</p>
           <p className="nb-footer-tag" style={{ maxWidth: '36ch', marginTop: 12, opacity: 0.7 }}>
