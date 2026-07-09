@@ -26,13 +26,38 @@ const FORM_INIT: FormData = {
   cuando: 'En los próximos 3 meses', mensaje: '',
 }
 
-function LeadMagnet() {
+function LeadMagnet({ csrfToken, ensureToken }: { csrfToken: string; ensureToken: () => Promise<string> }) {
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [website_check, setWebsiteCheck] = useState('')
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email && email.includes('@')) setSent(true)
+    setSending(true)
+    setError(null)
+
+    const token = csrfToken || await ensureToken()
+
+    const data = new FormData()
+    data.append('csrf_token', token)
+    data.append('website_check', website_check)  // honeypot
+    data.append('email', email)
+
+    try {
+      const res = await fetch('/contacto/enviar_guia.php', { method: 'POST', body: data })
+      const json = await res.json()
+      if (json.success) {
+        setSent(true)
+      } else {
+        setError(json.message ?? 'Error al enviar. Intentá de nuevo.')
+      }
+    } catch {
+      setError('Error de conexión. Revisá tu internet e intentá de nuevo.')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -73,9 +98,20 @@ function LeadMagnet() {
               type="email" required placeholder="tu@email.com"
               value={email} onChange={e => setEmail(e.target.value)}
             />
-            <button className="nb-btn nb-btn-primary" type="submit">
-              Enviarme la guía →
+            <input
+              type="text" value={website_check} onChange={e => setWebsiteCheck(e.target.value)}
+              tabIndex={-1} autoComplete="off"
+              style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+              aria-hidden="true"
+            />
+            <button className="nb-btn nb-btn-primary" type="submit" disabled={sending}>
+              {sending ? 'Enviando...' : 'Enviarme la guía →'}
             </button>
+            {error && (
+              <p style={{ fontSize: 13, color: '#e55', marginTop: 4, lineHeight: 1.5 }}>
+                {error}
+              </p>
+            )}
             <p style={{ fontSize: 11, color: 'var(--stone-300)', lineHeight: 1.5, marginTop: 4 }}>
               Al descargar aceptás recibir nuestro newsletter ocasional. Podés darte de baja cuando quieras.
             </p>
@@ -103,20 +139,24 @@ export default function ContactoPage() {
   const update = (k: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm(f => ({ ...f, [k]: e.target.value }))
 
+  const ensureToken = async () => {
+    try {
+      const r = await fetch('/contacto/init.php')
+      const d = await r.json()
+      const token = d.csrf_token ?? ''
+      setCsrfToken(token)
+      return token
+    } catch {
+      return ''
+    }
+  }
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSending(true)
     setError(null)
 
-    let token = csrfToken
-    if (!token) {
-      try {
-        const r = await fetch('/contacto/init.php')
-        const d = await r.json()
-        token = d.csrf_token ?? ''
-        setCsrfToken(token)
-      } catch {}
-    }
+    const token = csrfToken || await ensureToken()
 
     const data = new FormData()
     data.append('csrf_token', token)
@@ -273,7 +313,7 @@ export default function ContactoPage() {
         </div>
       </section>
 
-      <LeadMagnet />
+      <LeadMagnet csrfToken={csrfToken} ensureToken={ensureToken} />
 
       <section style={{ padding: 'clamp(60px,8vw,100px) clamp(20px,5vw,80px)', background: 'var(--bone)', textAlign: 'center' }}>
         <p className="nb-section-lede" style={{ margin: '0 auto', maxWidth: '46ch' }}>

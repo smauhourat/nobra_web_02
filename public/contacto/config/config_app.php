@@ -3,6 +3,11 @@
 defined('ACCESO_SEGURO') or die('Acceso denegado');
 
 return [
+    // 0. Sitio
+    'sitio' => [
+        'url_base' => 'https://www.nobra.com.ar', // Sin barra final. Usado para armar links absolutos en emails.
+    ],
+
     // 1. Configuración SMTP
     'smtp' => [
         'host'       => 'mail.nobra.com.ar', // Obtener del panel de hosting DonWeb/Dattaweb

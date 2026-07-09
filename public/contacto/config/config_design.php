@@ -42,6 +42,10 @@ return [
         'exito'             => '¡Mensaje enviado! Te responderemos a la brevedad.',
         'error_gral'        => 'Ocurrió un error al enviar. Por favor verifica tus datos.'
     ],
+    'guia' => [
+        'asunto'   => 'Tu guía Nobra: Checklist de 10 puntos antes de construir',
+        'exito'    => 'Listo. Revisá tu casilla, te enviamos el link de tu guía.',
+    ],
     'estilos' => [
         // Fuente muy legible y moderna
         'fuente_principal'   => '"Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
