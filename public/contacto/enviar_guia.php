@@ -58,15 +58,14 @@ try {
     if (preg_match("/[\r\n]/", $email)) throw new Exception("Intento de inyección en Email.");
 
     // ==========================================================================
-    // Link único de descarga
+    // Link de descarga
     // ==========================================================================
-    $token = bin2hex(random_bytes(16));
-    $base  = rtrim($conf['sitio']['url_base'] ?? '', '/');
+    $base = rtrim($conf['sitio']['url_base'] ?? '', '/');
     if ($base === '') {
         $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
         $base = $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? '');
     }
-    $link = $base . '/guia?t=' . $token;
+    $link = $base . '/guia-30ce9b9a3769132c.html';
 
     // ==========================================================================
     // Envío del correo con el link
@@ -95,14 +94,14 @@ try {
     $mensaje_html .= "<p style='margin: 28px 0;'>";
     $mensaje_html .= "<a href='" . htmlspecialchars($link, ENT_QUOTES, 'UTF-8') . "' style='background:#082c60;color:#f6f4ef;text-decoration:none;padding:14px 28px;border-radius:2px;display:inline-block;font-weight:500;'>Ver mi guía →</a>";
     $mensaje_html .= "</p>";
-    $mensaje_html .= "<p style='font-size:13px;color:#777;'>Este link es exclusivo para vos. Podés abrirlo desde tu navegador e imprimirlo o guardarlo como PDF.</p>";
+    $mensaje_html .= "<p style='font-size:13px;color:#777;'>Podés abrirlo desde tu navegador e imprimirlo o guardarlo como PDF.</p>";
     $mensaje_html .= "<p style='margin-top:32px;font-size:13px;color:#777;'>— Equipo Nobra Arquitectura</p>";
     $mensaje_html .= "</div>";
 
     $mail->isHTML(true);
     $mail->Subject = $design['guia']['asunto'] ?? 'Tu guía Nobra';
     $mail->Body    = $mensaje_html;
-    $mail->AltBody = "Tu guía está lista. Abrí este link exclusivo: " . $link;
+    $mail->AltBody = "Tu guía está lista. Abrí este link: " . $link;
 
     $mail->send();
 
