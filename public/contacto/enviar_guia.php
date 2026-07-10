@@ -2,8 +2,8 @@
 /**
  * Envío del link de descarga de la guía (Lead Magnet)
  * Reutiliza la config y el motor de envío (PHPMailer) de procesar.php.
- * A cada solicitud se le genera un token aleatorio único, para que el
- * link recibido por el cliente no sea una URL fija/adivinable.
+ * Además de enviarle el link al cliente, avisa por mail a un destinatario
+ * interno configurable (config_app.php > notificaciones.guia_destinatario).
  */
 
 session_start();
@@ -107,6 +107,41 @@ try {
 
     $response['success'] = true;
     $response['message'] = $design['guia']['exito'] ?? 'Listo, revisá tu casilla.';
+
+    // ==========================================================================
+    // Aviso interno: alguien descargó la guía (no debe afectar la respuesta al cliente)
+    // ==========================================================================
+    $destinatario_aviso = $conf['notificaciones']['guia_destinatario'] ?? '';
+    if (!empty($destinatario_aviso)) {
+        try {
+            $aviso = new PHPMailer(true);
+            $aviso->SMTPOptions = $mail->SMTPOptions;
+            $aviso->isSMTP();
+            $aviso->Host       = $conf['smtp']['host'];
+            $aviso->SMTPAuth   = $conf['smtp']['auth'];
+            $aviso->Username   = $conf['smtp']['username'];
+            $aviso->Password   = $conf['smtp']['password'];
+            $aviso->SMTPSecure = $conf['smtp']['secure'];
+            $aviso->Port       = $conf['smtp']['port'];
+            $aviso->CharSet    = 'UTF-8';
+
+            $aviso->setFrom($conf['smtp']['username'], $conf['smtp']['from_name']);
+            $aviso->addAddress($destinatario_aviso);
+
+            $email_seguro = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+            $aviso->isHTML(true);
+            $aviso->Subject = 'Descarga de guía · ' . $email;
+            $aviso->Body    = "<p>Un cliente descargó la guía (Checklist de 10 puntos antes de construir).</p>"
+                             . "<p><strong>Email:</strong> " . $email_seguro . "<br>"
+                             . "<strong>Fecha:</strong> " . date('d/m/Y H:i') . "<br>"
+                             . "<strong>IP:</strong> " . ($_SERVER['REMOTE_ADDR'] ?? '') . "</p>";
+            $aviso->AltBody = "Un cliente descargó la guía: {$email} (" . date('d/m/Y H:i') . ")";
+
+            $aviso->send();
+        } catch (Exception $e) {
+            // La notificación interna es best-effort: si falla, no afecta la respuesta al usuario.
+        }
+    }
 
 } catch (Exception $e) {
     $msg = $e->getMessage();

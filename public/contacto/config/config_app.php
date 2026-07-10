@@ -40,6 +40,11 @@ return [
         'adjuntos'  => ['activo' => false, 'requerido' => false]
     ],
 
+    // 4.5 Notificaciones internas
+    'notificaciones' => [
+        'guia_destinatario' => 'estudio@nobra.com.ar', // A quién avisar cuando alguien descarga la guía
+    ],
+
     // 4. Seguridad Interna (WAF + Honeypot + TimeTrap)
     'seguridad' => [
         'permitir_adjuntos' => false,
